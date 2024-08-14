@@ -1,0 +1,23 @@
+
+
+{% extends 'layout.html' %}
+
+{% block title %}
+   Share ToDo
+{% endblock %}
+
+{% block content %}
+  <h2>Share "{{ todo.title }}"</h2>
+  <form method="post">
+    {% csrf_token %}
+    <label for="user" class="form-control-label">With</label>
+    <select name="user_id" id="user" class="form-control">
+      {% for user in users %}
+        <option value="{{ user.id }}">{{ user.username }}</option>
+      {% endfor %}
+    </select>
+    <br/>
+    <button type="submit" class="btn btn-primary">Share</button>
+  </form>
+  <a href="{% url 'todos.mine' %}" class="btn btn-secondary">Cancel</a>
+{% endblock %}

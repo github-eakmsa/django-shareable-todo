@@ -1,0 +1,14 @@
+<div class="main">
+    <a href="{% url 'users.create' %}">
+        new
+    </a>
+<br/>
+	{% for data in dataset %}.
+
+	{{ data.name }}<br/>
+	{{ data.email }}<br/>
+	<hr/>
+
+	{% endfor %}
+
+</div>

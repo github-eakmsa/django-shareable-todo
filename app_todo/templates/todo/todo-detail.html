@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+   ToDo Details
+{% endblock %}
+
+{% block content %}
+  <h2>{{ todo.title }}</h2>
+  <p>{{ todo.body }}</p>
+  <p>
+    Shared with: 
+<ul>
+    {% for user in todo.shared_with.all %} 
+    <li>
+    {{ user.username }} 
+    </li>
+    {% endfor %}
+  </ul>
+  </p>
+  <a href="{% url 'todos.mine' %}">Back to list</a>
+{% endblock %}

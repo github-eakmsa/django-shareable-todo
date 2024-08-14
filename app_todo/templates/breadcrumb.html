@@ -1,0 +1,10 @@
+    
+{% comment %} {% for i in (path.split('/')) %} {% endcomment %}
+{% for i in path %}
+	<li class="list-inline-item seprate">
+		<span>/</span>
+	</li>
+	<li class="list-inline-item"> 
+		{{i}}
+	</li>
+{% endfor %}

@@ -1,0 +1,63 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+   My ToDos
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="title-5 m-b-35">My Todos</h3>
+        <div class="table-responsive table-responsive-data2">
+            <table class="table table-data2">
+                <thead>
+                    <tr>
+                        {% comment %} <th>#</th> {% endcomment %}
+                        <th>title</th>
+                        <th>description</th>
+                        <th>date</th>
+                        <th>status</th>
+                        <th>completed</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for i in dataset %}
+                    <tr class="tr-shadow">
+                        {% comment %} <td>{{ i.id }}</td> {% endcomment %}
+                        <td><a href="{% url 'todos.detail' i.id %}">{{ i.title }}</a></td>
+                        <td>{{ i.body }}</td>
+                        <td>{{ i.created_at }}</td>
+                        <td>
+                            <span class="status--process">Processed</span>
+                        </td>
+                        <td>postponed</td>
+                        <td>
+                            <div class="table-data-feature">
+                                <a href="{% url 'todos.share' i.id %}" class="item" data-toggle="tooltip" data-placement="top" title="" data-original-title="Send">
+                                    <i class="zmdi zmdi-mail-send"></i>
+                                </a>
+                                <a href="{% url 'todos.update' i.id %}" class="item" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
+                                    <i class="zmdi zmdi-edit"></i>
+                                </a>
+                                <a href="{% url 'todos.delete' i.id %}" class="item" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete">
+                                    <i class="zmdi zmdi-delete"></i>
+                                </a>
+                                <button class="item" data-toggle="tooltip" data-placement="top" title="" data-original-title="More">
+                                    <i class="zmdi zmdi-more"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="spacer"></tr>
+                    {% endfor %}
+
+                  </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
