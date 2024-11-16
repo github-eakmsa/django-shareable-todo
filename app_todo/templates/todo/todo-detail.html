@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 {% extends 'inc/layout.html' %}
 
@@ -256,3 +257,26 @@ ul.timeline > li:before {
 
 </div>
   {% endblock %}
+=======
+{% extends 'layout.html' %}
+
+{% block title %}
+   ToDo Details
+{% endblock %}
+
+{% block content %}
+  <h2>{{ todo.title }}</h2>
+  <p>{{ todo.body }}</p>
+  <p>
+    Shared with: 
+<ul>
+    {% for user in todo.shared_with.all %} 
+    <li>
+    {{ user.username }} 
+    </li>
+    {% endfor %}
+  </ul>
+  </p>
+  <a href="{% url 'todos.mine' %}">Back to list</a>
+{% endblock %}
+>>>>>>> a534c5519ffb00809869d5ff3e31310c4f219296

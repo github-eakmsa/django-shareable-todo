@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'inc/layout.html' %}
 
 {% load i18n %}
@@ -40,10 +41,34 @@
                         <th>{% trans "col_created_on" %}</th>
                         <th>{% trans "col_due_date" %}</th>
                         <th>{% trans "col_todo_status" %}</th>
+=======
+{% extends 'layout.html' %}
+
+{% block title %}
+Recent ToDos
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="title-5 m-b-35">Recent Todos</h3>
+        <div class="table-responsive table-responsive-data2">
+            <table class="table table-data2">
+                <thead>
+                    <tr>
+                        {% comment %} <th>#</th> {% endcomment %}
+                        <th>title</th>
+                        <th>description</th>
+                        <th>date</th>
+                        <th>status</th>
+                        <th>completed</th>
+>>>>>>> a534c5519ffb00809869d5ff3e31310c4f219296
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
+<<<<<<< HEAD
                     {% for i in page_obj %}
                     <tr class="tr-shadow">
                         <td>{{ forloop.counter }}</td>
@@ -99,6 +124,43 @@
             </table>
         </div>
         
+=======
+
+                    {% for i in page_obj %}
+                    <tr class="tr-shadow">
+                        {% comment %} <td>{{ i.id }}</td> {% endcomment %}
+                        <td><a href="{% url 'todos.detail' i.id %}">{{ i.title }}</a></td>
+                        <td>{{ i.body }}</td>
+                        <td>{{ i.created_at }}</td>
+                        <td>
+                            <span class="status--process">Processed</span>
+                        </td>
+                        <td>postponed</td>
+                        <td>
+                            <div class="table-data-feature">
+                                <a href="{% url 'todos.share' i.id %}" class="item" data-toggle="tooltip" data-placement="top" title="" data-original-title="Send">
+                                    <i class="zmdi zmdi-mail-send"></i>
+                                </a>
+                                <a href="{% url 'todos.update' i.id %}" class="item" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
+                                    <i class="zmdi zmdi-edit"></i>
+                                </a>
+                                <a href="{% url 'todos.delete' i.id %}" class="item" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete">
+                                    <i class="zmdi zmdi-delete"></i>
+                                </a>
+                                <button class="item" data-toggle="tooltip" data-placement="top" title="" data-original-title="More">
+                                    <i class="zmdi zmdi-more"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="spacer"></tr>
+                    {% endfor %}
+
+                  </tbody>
+            </table>
+        </div>
+    
+>>>>>>> a534c5519ffb00809869d5ff3e31310c4f219296
         <div class="pagination">
             <span class="step-links">
                 {% if page_obj.has_previous %}
@@ -119,6 +181,7 @@
 
     </div>
 </div>
+<<<<<<< HEAD
 {% endblock %}
 
 {% block page_bottom_script %}
@@ -134,3 +197,7 @@
 </script>
 {% endblock %}
     
+=======
+
+{% endblock %}
+>>>>>>> a534c5519ffb00809869d5ff3e31310c4f219296
