@@ -1,0 +1,5 @@
+<${actorFirstName}> has given a comment to the Todo [${todoTitle}] on ${todoCreationDate}
+
+Click the link below to see details
+
+${todoDetailLink}

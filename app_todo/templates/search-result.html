@@ -1,0 +1,116 @@
+{% extends 'inc/layout.html' %}
+
+{% load static %}
+
+{% load i18n %}
+
+{% block title %}
+{% trans "title_search_result" %}
+{% endblock %}
+
+{% block page_style_and_script %}
+<link href=" {% static 'vendor/vector-map/jqvmap.min.css' %}" rel="stylesheet" media="all">
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-10 col-sm-12">
+        <form method="get">
+        {% csrf_token %}
+        <div class="row form-group">
+            <div class="col-sm-12 col-md-10">
+                <input type="text" id="search_result" class="form-control form-input-lg" name="q" placeholder='{% trans "plh_search_todos_users_workspaces" %}'>
+                <input type="hidden" id="id" name="id">
+                <input type="hidden" id="type" name="type">
+            </div>
+            <div class="col-sm-12 col-md-2">
+                <button type="submit" class="btn btn-primary">{% trans "btn_search" %}</button>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+    
+    {% if result %}
+
+    <div class="row">
+        <div class="col-md-10 col-sm-12">
+    <h3 class="title-5 m-b-35">
+        
+        <!-- help content tooltip -->
+        <a tabindex="0" class="btn btn-link" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" title='{% trans "title_search_result" %}' data-content='{% trans "tooltip_search_results" %}'> 
+            <small>
+            <i class="fa fa-question-circle"></i>
+            </small>
+        </a>
+        {% trans "title_search_result" %}
+    </h3>
+
+      <div class="card">
+        <div class="card-body card-block">
+          <p>
+          {% trans "label_data" %}
+          <br>
+          <b>
+            {% if type == 'todo' %}
+                {{ result.title }}            
+            {% elif type == 'user' %}
+                {{ result.first_name }} {{ result.last_name }}  
+            {% endif %}
+        </b>
+          </p>
+          <p>
+            {% trans "label_type" %}
+            <br>
+            <b>{{ type }}</b>
+          </p>
+          <hr/>
+    
+          <p>
+            {% if type == 'todo' %}
+                <a href="{% url 'todos.detail' result.id %}?next={{request.path}}" class="btn btn-link">          
+            {% elif type == 'user' %}
+                <a href="{% url 'users.profile' %}?next={{request.path}}&user={{result.id}}" class="btn btn-link">  
+            {% endif %}
+            {% trans "link_view_details" %}
+                </a>
+          </p>
+          <hr>
+    </div>
+</div>
+</div>
+</div>
+</div>
+{% else %}
+<p>
+    {% trans "text_no_records_found" %}
+</p>
+    {% endif %}
+{% endblock %}
+
+{% block page_bottom_script %}
+<script>
+    $(document).ready(function() {
+        $('#search_result').autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: "{% url 'grand_search' %}",
+                    data: {
+                        'keyword': request.term
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        response(data);
+                    }
+                });
+            },
+            minLength: 3,
+            select: function(event, ui) {
+                // When an item is selected, set the hidden field with the post ID
+                $('#id').val(ui.item.id);
+                $('#type').val(ui.item.type);
+            }
+        });
+    });
+</script>
+{% endblock %}

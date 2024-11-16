@@ -1,0 +1,36 @@
+
+{% load i18n %}
+
+<form action="{% url 'todos.all-mine' %}">
+    <div class="row">
+        <div class="col-md-3 col-sm-12">
+            <small>{% trans "label_due_from_date" %}</small>
+            <input type="text" class="form-control" name="date_start" value="{{ form.date_start }}" placeholder='{% trans "plh_select_date" %}' onclick="this.type='date'" onfocusout="this.value == '' ? this.type='text' : this.type='text'">
+        </div>
+        <div class="col-md-3 col-sm-12">
+            <small>{% trans "label_due_to_date" %}</small>
+            <input type="text" class="form-control" name="date_end" value="{{ form.date_end }}" placeholder='{% trans "plh_select_date" %}' onclick="this.type='date'" onfocusout="this.value == '' ? this.type='text' : this.type='text'">
+        </div>
+        <div class="col-md-3 col-sm-12">
+            <small>{% trans "label_todo_status" %}</small>
+            <select class="form-control" name="todo_status">
+                <option value="">{% trans "opt_select" %} </option>
+                {% for key, value in todo_status %}
+                <option value="{{key}}" {% if key == currStatus %} selected {% endif %}>
+                    {{value}}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-3 col-sm-12">
+            <!-- <small>--</small> -->
+            <br>
+            <button type="submit" class="btn btn-primary">
+                {% trans "btn_filter" %}
+            </button>
+            <button type="reset" class="btn btn-secondary">
+                {% trans "btn_reset" %}
+            </button>
+        </div>
+    </div>
+    </form>

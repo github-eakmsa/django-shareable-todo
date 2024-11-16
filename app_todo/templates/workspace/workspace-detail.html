@@ -1,0 +1,87 @@
+{% extends 'inc/layout.html' %}
+
+{% load i18n %}
+
+{% block title %}
+{% trans "title_workspace_details" %}
+{% endblock %}
+
+{% block breadcrumb %}
+{% include "inc/breadcrumb.html" with path="Workspace/Details" only %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+
+<div class="col-md-8 col-sm-12">
+  <div class="card">
+    <div class="card-header">
+            
+      <!-- help content tooltip -->
+      <a tabindex="0" class="btn btn-link" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" title='{% trans "title_workspace_details" %}' data-content='{% trans "tooltip_workspace_details" %}'>
+        <small>
+        <i class="fa fa-question-circle"></i>
+        </small>
+      </a>
+      {% trans "title_workspace_details" %}
+    </div>
+    <div class="card-body card-block">
+      <p>
+      {% trans "label_name" %} 
+      <br>
+      <b>{{ workspace.name }}</b>
+      </p>
+      <br>
+      <p>
+        {% trans "label_status" %}
+        <br>
+        <b>{{ workspace.get_status_display }}</b>
+      </p>
+      <hr/>
+
+      <p>
+        <b>{% trans "label_shared_with" %}</b>
+        <br>
+        {% for user in workspace.shared_with.all %}
+        {{ forloop.counter }}.
+        {{ user.first_name }}
+        <br>
+        {% empty %}
+        {% trans "text_none" %}
+        {% endfor %}
+      </p>
+      <hr/>
+
+      <table class="table">
+        <tbody>
+          <tr>
+            <td>
+                <b>{% trans "label_created_by" %} </b> 
+              <br/>
+                {{ workspace.user.first_name }}
+            </td>
+            <td>
+                <b>{% trans "label_created_on" %} </b>
+              <br/>
+                {{ workspace.created_at }}
+            </td>
+        </tr>
+      </tbody>
+    </table>
+
+      <p>
+        <a href="{{next}}?next={{request.path}}" class="btn btn-link">&larr;{% trans "link_back" %}</a> |
+
+        {% if workspace.user == user %}  
+          <a href="{% url 'workspaces.share' workspace.id %}?next={{request.path}}" class="btn btn-link">{% trans "link_share" %}</a> |
+          <a href="{% url 'workspaces.update' workspace.id %}?next={{request.path}}" class="btn btn-link">{% trans "link_edit" %}</a>  
+        {% endif %}
+
+      </p>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+  {% endblock %}

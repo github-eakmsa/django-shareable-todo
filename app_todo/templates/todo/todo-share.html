@@ -1,0 +1,93 @@
+
+{% extends 'inc/layout.html' %}
+
+{% load i18n %}
+
+{% block title %}
+   {% trans "title_share_todo" %}
+{% endblock %}
+
+{% block breadcrumb %}
+{% include "inc/breadcrumb.html" with path="Todo/Share" only %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+	<div class="col-md-10 col-sm-12">
+    
+<div class="card">
+  <div class="card-header">
+            
+    <!-- help content tooltip -->
+    <a tabindex="0" class="btn btn-link" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" title='{% trans "title_share_todo" %}' data-content='{% trans "tooltip_share_todo" %}'> 
+      <small>
+      <i class="fa fa-question-circle"></i>
+      </small>
+    </a>
+
+    {% trans "title_share_todo" %}
+  </div>
+
+  <div class="card-body">
+  <form method="post">
+    {% csrf_token %}
+    <div class="row form-group">
+      <div class="col-sm-12 col-md-3">
+        <label for="hf-todo" class=" form-control-label">{% trans "label_todo_title" %}</label>
+      </div>
+      <div class="col-sm-12 col-md-9">
+        <p class="form-control-static">{{ todo.title|slice:"0:50" }}</p>
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col-sm-12 col-md-3">
+        <label for="hf-user" class=" form-control-label">{% trans "label_share_with" %} *</label>
+      </div>
+      <div class="col-sm-12 col-md-9">
+          <input type="text" id="search-box" class="form-control" name="q" placeholder='{% trans "plh_search_by_name_email_username" %}'> 
+          <input type="hidden" id="selected-user-id" name="user_id">
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col-sm-12 col-md-3">
+        <label for="" class=" form-control-label">
+        <a href="{{next}}?next={{request.path}}" class="btn btn-link">&larr;{% trans "link_back" %}</a>
+      </label>
+      </div>
+      <div class="col-sm-12 col-md-9">
+        <button type="submit" class="btn btn-primary btn-block">{% trans "btn_share" %}</button> 
+      </div>
+    </div>
+  </form>   
+</div>
+
+</div>
+</div>
+{% endblock %}
+
+{% block page_bottom_script %}
+<script>
+    $(document).ready(function() {
+        $('#search-box').autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: "{% url 'search_users' %}",
+                    data: {
+                        'search_term': request.term,
+                        'todo': {{todo.id}}
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        response(data);
+                    }
+                });
+            },
+            minLength: 3,
+            select: function(event, ui) {
+                // When an item is selected, set the hidden field with the post ID
+                $('#selected-user-id').val(ui.item.id);
+            }
+        });
+    });
+</script>
+{% endblock %}

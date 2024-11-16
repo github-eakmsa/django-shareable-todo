@@ -1,0 +1,5 @@
+<${actorFirstName}> has shared the Workspace [${workspaceName}] with you on ${workspaceCreationDate}
+
+Click the link below to see details
+
+${workspaceDetailLink}

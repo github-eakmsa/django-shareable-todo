@@ -1,0 +1,122 @@
+{% extends 'inc/layout.html' %}
+
+{% load i18n %}
+
+{% block title %}
+{% trans "title_private_todos" %} 
+{% endblock %}
+
+{% block breadcrumb %}
+{% include "inc/breadcrumb.html" with path="Todos/Private" only %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="title-5 m-b-35">
+            
+            <!-- help content tooltip -->
+            <a tabindex="0" class="btn btn-link" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" title='{% trans "title_private_todos" %}' data-content='{% trans "tooltip_private_todos" %}'>  
+                <small>
+                <i class="fa fa-question-circle"></i>
+                </small>
+            </a>
+            {% trans "title_private_todos" %} 
+        </h3>
+            
+        {% include 'todo/inc/todo-filter.html' %}
+
+        <hr>
+        <div class="table-responsive table-responsive-data2">
+            <table class="table table-data2">
+                {% if page_obj %}
+                <thead>
+                    <tr>
+                        <th>{% trans "col_roll_num" %}</th>
+                        <th>{% trans "col_title" %}</th>
+                        <th>{% trans "col_created_on" %}</th>
+                        <th>{% trans "col_due_date" %}</th>
+                        <th>{% trans "col_todo_status" %}</th>
+                        <th>{% trans "col_record_status" %}</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in page_obj %}
+                    <tr class="tr-shadow">
+                        <td>{{ forloop.counter }}</td>
+                        <td><a href="{% url 'todos.detail' i.id %}?next={{request.path}}">{{ i.title }}</a></td>
+                        <td>{{ i.created_at }}</td>
+                        <td>{{ i.expires_at|expired_due_date|safe }}</td>
+                        <td>
+                            <span class="status--process">{{i.get_todo_status_display|format_todo_status:i.todo_status|safe}}</span>
+                            <div>
+                                <form method="post" action="{% url 'todos.status_change' i.id %}" >  
+                                    {% csrf_token %}
+                                    <input type="hidden" name="next" value="{{ request.path }}">                              
+                                    <select id="hf-todo_status" name="todo_status" class="form-control-sm" onchange="this.form.submit()" style="width: 120px">
+                                        {% for key, value in i.TODO_STATUS_CHOICES %}
+
+                                        {% if i.todo_status == key %}
+                                        <option value="{{key}}" selected>{{value}}</option>
+                                        {% else %}
+                                        <option value="{{key}}">{{value}}</option>
+                                        {% endif %}
+
+                                        {% endfor %}
+                                    </select>
+                                </form>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="status--process">{{i.get_status_display}}</span>
+                        </td>
+                        <td>
+                            <div class="table-data-feature">
+                                <a href="{% url 'todos.share' i.id %}?next={{request.path}}" class="item" data-toggle="tooltip"
+                                    data-placement="top" title="" data-original-title="Send">
+                                    <i class="zmdi zmdi-mail-send"></i>
+                                </a>
+                                <a href="{% url 'todos.update' i.id %}?next={{request.path}}" class="item" data-toggle="tooltip"
+                                    data-placement="top" title="" data-original-title="Edit">
+                                    <i class="zmdi zmdi-edit"></i>
+                                </a>
+                                <a href="{% url 'todos.delete' i.id %}?next={{request.path}}" class="item" data-toggle="tooltip"
+                                    data-placement="top" title="" data-original-title="Delete">
+                                    <i class="zmdi zmdi-delete"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="spacer"></tr>
+                    {% endfor %}
+                </tbody>
+                {% else %}
+                <tr>
+                    <td>{% trans "text_no_records_found" %}</td>
+                </tr>
+                {% endif %}
+            </table>
+        </div>
+        
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+    
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+    
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

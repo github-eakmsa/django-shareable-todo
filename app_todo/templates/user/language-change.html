@@ -1,0 +1,60 @@
+
+{% extends 'inc/layout.html' %}
+
+{% load i18n %}
+
+{% block title %}
+   {% trans "title_change_language" %} 
+{% endblock %}
+
+{% block breadcrumb %}
+{% include "inc/breadcrumb.html" with path="User/Language-Change" only %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+	<div class="col-md-10 col-sm-12">
+    
+<div class="card">
+  <div class="card-header">
+            
+    <!-- help content tooltip -->
+    <a tabindex="0" class="btn btn-link" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" title='{% trans "title_change_language" %}' data-content='{% trans "tooltip_change_language" %}'>  
+      <small>
+      <i class="fa fa-question-circle"></i>
+      </small>
+    </a>
+    {% trans "title_change_language" %} 
+  </div>
+
+  <div class="card-body">
+    <form action="{% url 'set_language' %}" method="post">
+    {% csrf_token %}
+    <div class="row form-group">
+      <div class="col col-md-3">
+        <label for="hf-user" class=" form-control-label">{% trans "label_language" %} *</label>
+      </div>
+      <div class="col-12 col-md-9">
+        <select name="language" class="form-control">
+            {% for lang_code, lang_name in LANGUAGES %}
+                <option value="{{ lang_code }}"{% if lang_code == request.LANGUAGE_CODE %} selected {% endif %}>{{ lang_name }}</option>
+            {% endfor %}
+        </select>
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col col-md-3">
+        <label for="" class=" form-control-label">
+        <a href="{{next}}?next={{request.path}}" class="btn btn-link">&larr;{% trans "link_back" %} </a>
+      </label>
+      </div>
+      <div class="col-12 col-md-9">
+        <button type="submit" class="btn btn-primary btn-block">{% trans "btn_change_language" %} </button>
+      </div>
+    </div>
+  </form>   
+</div>
+
+</div>
+</div>
+{% endblock %}

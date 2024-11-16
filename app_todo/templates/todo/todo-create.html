@@ -1,0 +1,201 @@
+{% extends 'inc/layout.html' %}
+
+{% load i18n %}
+
+{% block title %}
+	{% if form.instance.pk %}
+		{% trans "title_edit_todo" %}
+	{% else %}
+		{% trans "title_create_todo" %}
+	{% endif %}
+{% endblock %}
+
+{% block breadcrumb %}
+{% if form.instance.pk %}
+{% include "inc/breadcrumb.html" with path="Todos/Update" only %}
+{% else %}
+{% include "inc/breadcrumb.html" with path="Todos/Create" only %}
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+	<div class="col-md-10 col-sm-12">
+        
+        {% if form.errors %}
+
+            {% for field in form %}
+                {% for error in field.errors %}
+                <p class="text-danger">
+                    {{error}}
+                </p>
+                {% endfor %}
+            {% endfor %}
+            
+            {% for error in form.non_field_errors %}
+                <p class="text-danger">
+                    {{error}}
+                </p>                
+            {% endfor %}
+                
+                
+        {% endif %}
+
+		<div class="card">
+			<div class="card-header">
+            
+				<!-- help content tooltip -->
+				<a tabindex="0" class="btn btn-link" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" title='{% trans "title_create_todo" %}' data-content='{% trans "tooltip_create_todo" %}'>
+					<small>
+					<i class="fa fa-question-circle"></i>
+					</small>
+				</a>
+
+				{% if form.instance.pk %}
+					{% trans "title_edit_todo" %}
+				{% else %}
+					{% trans "title_create_todo" %}
+				{% endif %}
+			</div>
+			<div class="card-body card-block">
+				<form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+
+					{% csrf_token %}
+
+					<div class="row form-group">
+						<div class="col-sm-12 col-md-3">
+							<label for="hf-title" class=" form-control-label">{% trans "label_title" %} *</label>
+						</div>
+						<div class="col-sm-12 col-md-9">
+							<input type="text" id="hf-title" name="title" value="{{ form.instance.title }}"
+								placeholder='{% trans "plh_enter_title" %}' class="form-control" required>
+						</div>
+					</div>
+					<div class="row form-group">
+						<div class="col-sm-12 col-md-3">
+							<label for="hf-description" class=" form-control-label">{% trans "label_description" %}</label>							
+						</div>
+						<div class="col-sm-12 col-md-9">
+							<textarea id="hf-description" name="body" placeholder='{% trans "plh_enter_description" %}'
+								class="form-control" rows="2">{{ form.instance.body }}</textarea>
+						</div>
+					</div>
+					<div class="row form-group">
+						<div class="col-sm-12 col-md-3">
+							<label for="hf-attachments" class=" form-control-label">{% trans "label_attachments" %}</label>
+						</div>
+						<div class="col-sm-12 col-md-9">
+							<input type="file" id="hf-attachments" name="attachments"
+								value="{{ form.instance.attachments }}" class="form-control" multiple>
+						</div>
+					</div>
+					<div class="row form-group">
+						<div class="col-sm-12 col-md-3">
+							<label for="hf-duration" class=" form-control-label">{% trans "label_duration" %}</label>
+						</div>
+						<div class="col-sm-12 col-md-9">
+							<input type="number" min="0.5" max="72" step="0.01" id="hf-duration" name="duration" value="{{ form.instance.duration }}"
+								placeholder='{% trans "plh_enter_duration" %}' class="form-control" >
+						</div>
+					</div>
+					<div class="row form-group">
+						<div class="col-sm-12 col-md-3">
+							<label for="hf-expires_at" class=" form-control-label">{% trans "label_due_date" %} *</label>
+						</div>
+						<div class="col-sm-12 col-md-9">
+							<input type="date" id="hf-expires_at" name="expires_at"
+								value="{{form.instance.expires_at|date:'Y-m-d'}}" placeholder='{% trans "pl_due_date" %}' class="form-control" required>
+						</div>
+					</div>
+					<div class="row form-group">
+						<div class="col-sm-12 col-md-3">
+							<label class=" form-control-label">{% trans "label_want_a_reminder" %}</label>
+						</div>
+						<div class="col-sm-12 col-md-9">
+							<div class="form-check">
+								<div class="checkbox">
+									<label for="needs_reminder" class="form-check-label">
+										<input 
+										type="checkbox" 
+										id="needs_reminder" 
+										name="needs_reminder" 
+										value="True" 
+										class="form-check-input" 
+										{% if form.instance.pk %} {% else %} checked {% endif %} 
+										{% if form.instance.needs_reminder and form.instance.pk %} checked {% endif %} 
+										/>
+										{% trans "text_yes_i_want_a_reminder" %}
+									</label>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					{% comment %} <div id="reminderBox" style="display:hidden">
+					<div class="row form-group">
+						<div class="col col-md-3">
+							<label for="hf-reminder" class=" form-control-label">Remind Me At</label>
+						</div>
+						<div class="col-12 col-md-9">
+							<input type="datetime-local" min="" max="" id="hf-reminder" name="reminder" value="{{ form.instance.reminder }}"
+								placeholder="Enter reminder..." class="form-control">
+						</div>
+					</div>
+					</div> {% endcomment %}
+
+					{% if form.instance.pk %}
+
+					<div class="row form-group">
+						<div class="col-sm-12 col-md-3">
+							<label for="hf-status" class=" form-control-label">{% trans "label_record_status" %}</label>
+						</div>
+						<div class="col-sm-12 col-md-9">
+							<select id="hf-status" name="status" class="form-control">
+								{% for key, value in record_statuses %}
+
+								{% if form.instance.status == key %}
+								<option value="{{key}}" selected>{{value}}</option>
+								{% else %}
+								<option value="{{key}}">{{value}}</option>
+								{% endif %}
+
+								{% endfor %}
+							</select>
+						</div>
+					</div>
+
+					{% endif %}
+
+					<div class="row form-group">
+						<div class="col-sm-12 col-md-3">
+							<a href="{{next}}?next={{request.path}}" class="btn btn-link">&larr;{% trans "link_back" %}</a>
+						</div>
+						<div class="col-sm-12 col-md-9">
+							<button type="submit" class="btn btn-primary btn-block">{% trans "btn_save" %}</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+	</div>
+</div>
+{% endblock %}
+
+
+{% block page_bottom_script %}
+<script>
+	document.querySelector('#hf-expires_at').min = new Date().toISOString().split("T")[0];
+</script>
+{% comment %} <script>
+	document.querySelector("#remind").addEventListener("change", function(){
+		let reminderBox = document.querySelector("#reminderBox");
+		if (reminderBox.style.display === "none") {
+			reminderBox.style.display = "block";
+		} else {
+			reminderBox.style.display = "none";
+		}
+	});
+</script> {% endcomment %}
+{% endblock %}
+	

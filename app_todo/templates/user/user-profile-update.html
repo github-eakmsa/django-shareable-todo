@@ -1,0 +1,98 @@
+{% extends 'inc/layout.html' %}
+
+{% load i18n %}
+
+{% block title %}
+{% trans "title_update_profile" %}
+{% endblock %}
+
+{% block breadcrumb %}
+{% include "inc/breadcrumb.html" with path="User/profile/update" only %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+	<div class="col-md-10 col-sm-12">
+        
+        {% if form.errors %}
+
+            {% for field in form %}
+                {% for error in field.errors %}
+                <p class="text-danger">
+                    {{error}}
+                </p>
+                {% endfor %}
+            {% endfor %}
+            
+            {% for error in form.non_field_errors %}
+                <p class="text-danger">
+                    {{error}}
+                </p>                
+            {% endfor %}
+                
+                
+        {% endif %}
+
+		<div class="card">
+			<div class="card-header">
+				{% trans "title_update_profile" %}
+			</div>
+			<div class="card-body card-block">
+				<form method="post" enctype="multipart/form-data" class="form-horizontal">
+
+					{% csrf_token %}
+
+					<div class="row form-group">
+						<div class="col col-md-3">
+							<label for="hf-first_name" class=" form-control-label">{% trans "label_first_name" %} *</label>
+						</div>
+						<div class="col-12 col-md-9">
+							<input type="text" id="hf-first_name" name="first_name" value="{{ user.first_name }}"
+								placeholder='{% trans "plh_enter_first_name" %}' class="form-control" required>
+						</div>
+					</div>
+
+					<div class="row form-group">
+						<div class="col col-md-3">
+							<label for="hf-last_name" class=" form-control-label">{% trans "label_last_name" %} *</label>
+						</div>
+						<div class="col-12 col-md-9">
+							<input type="text" id="hf-last_name" name="last_name" value="{{ user.last_name }}"
+								placeholder='{% trans "plh_enter_last_name" %}' class="form-control" required>
+						</div>
+					</div>
+
+					<div class="row form-group">
+						<div class="col col-md-3">
+							<label for="hf-email" class=" form-control-label">{% trans "label_email" %} *</label>
+						</div>
+						<div class="col-12 col-md-9">
+							<input type="text" id="hf-email" name="email" value="{{ user.email }}"
+								placeholder='{% trans "plh_enter_email" %}' class="form-control" required>
+						</div>
+					</div>
+
+					<div class="row form-group">
+						<div class="col col-md-3">
+							<label for="hf-profile_picture" class=" form-control-label">{% trans "label_profile_picture" %} *</label>
+						</div>
+						<div class="col-12 col-md-9">
+							<input type="file" id="hf-profile_picture" name="profile_picture" class="form-control" accept="image/*">
+						</div>
+					</div>
+
+					<div class="row form-group">
+						<div class="col col-md-3">
+							<a href="{% url 'users.profile' %}?next={{request.path}}" class="btn btn-link">&larr;{% trans "link_back" %}</a>
+						</div>
+						<div class="col-12 col-md-9">
+							<button type="submit" class="btn btn-primary btn-block">{% trans "btn_update" %}</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+	</div>
+</div>
+{% endblock %}

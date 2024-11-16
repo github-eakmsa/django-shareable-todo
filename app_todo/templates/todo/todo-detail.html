@@ -1,0 +1,258 @@
+
+{% extends 'inc/layout.html' %}
+
+{% load i18n %}
+
+{% block title %}
+ {% trans "title_todo_details" %}
+{% endblock %}
+
+{% block page_style_and_script %}
+<style>
+ul.timeline {
+  list-style-type: none;
+  position: relative;
+}
+ul.timeline:before {
+  content: ' ';
+  background: #d4d9df;
+  display: inline-block;
+  position: absolute;
+  left: 29px;
+  width: 2px;
+  height: 100%;
+  z-index: 400;
+}
+ul.timeline > li {
+  margin: 20px 0;
+  padding-left: 50px;
+}
+ul.timeline > li:before {
+  content: ' ';
+  background: white;
+  display: inline-block;
+  position: absolute;
+  border-radius: 50%;
+  border: 3px solid #22c0e8;
+  left: 20px;
+  width: 20px;
+  height: 20px;
+  z-index: 400;
+}
+</style>
+{% endblock %}  
+
+{% block breadcrumb %}
+{% include "inc/breadcrumb.html" with path="Todo/Details" only %}
+{% endblock %}
+
+{% block content %}
+
+{% if CURRENT_WORKSPACE.id != todo.workspace.id %}
+<div class="row">
+  <div class="col">
+    <p>
+      <b>{% trans "label_todo_workspace" %} </b>        
+      <span class="badge badge-secondary">
+        {{todo.workspace.name}}
+      </span>
+    </p>
+    <p class="alert alert-info">
+      {% trans "note_todo_workspace_currently_not_active" %}
+    </p>
+    <form method="post" action="{% url 'workspaces.change' %}">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.path }}"/>
+        <input type="hidden" name="workspace" value="{{ todo.workspace.id }}"/>
+    <button type="submit" class="btn btn-link" onclick="return confirm('{% trans "note_switching_workspace" %}')" >{% trans "btn_switch_workspace" %}</button>    
+    </form>
+</div>
+</div>  
+{% endif %}
+
+
+<div class="row">
+
+<div class="col-md-8 col-sm-12">
+  <div class="card">
+    <div class="card-header">
+            
+      <!-- help content tooltip -->
+      <a tabindex="0" class="btn btn-link" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" title='{% trans "title_todo_details" %}' data-content='{% trans "tooltip_todo_details" %}'>
+        <small>
+        <i class="fa fa-question-circle"></i>
+        </small>
+      </a>
+      {% trans "title_todo_details" %}
+    </div>
+    <div class="card-body card-block">
+      <b>
+        <span class="status--process float-right mt-1">{{todo.get_todo_status_display|format_todo_status:todo.todo_status|safe}}</span>
+      </b>
+      <h3>{{ todo.title }}</h3>
+      <br>
+      <p>
+        {{ todo.body }}
+      </p>
+      <hr/>
+
+      <p>
+        <b>{% trans "label_shared_with" %}</b>
+        <br>
+        {% for user in todo.shared_with.all %}
+        {{ forloop.counter }}.
+        {{ user.first_name }} {{ user.last_name }}
+        <br>
+        {% empty %}
+        {% trans "text_none" %}
+        {% endfor %}
+      </p>
+      <hr/>
+
+      <p>
+        <b>{% trans "label_attachments" %}</b>
+      </p>      
+      {% if todo.todo_attachments %}
+      <ol>
+
+      {% for attachment in todo.todo_attachments.all %}
+        <li>
+          <a href="{{ attachment }}" class="btn btn-link" target="_blank" style="overflow-y: auto;">{{ attachment.filename }}</a>
+        </li>
+        {% empty %}
+          {% trans "text_none" %}
+      {% endfor %}
+
+      </ol>
+      {% endif %}        
+      <hr/>
+
+      <table class="table">
+        <tbody>
+          <tr>
+            <td>
+              <b>{% trans "label_duration" %} </b> 
+              <br/>
+                {{todo.duration}}
+            </td>
+            <td>
+              <b>{% trans "label_record_status" %} </b> 
+              <br/>
+              {{ todo.get_status_display }}
+            </td>
+          </tr>
+          <tr>
+            <td>
+                <b>{% trans "label_created_by" %} </b> 
+              <br/>
+                {{ todo.user.first_name }}
+            </td>
+            <td>
+                <b>{% trans "label_created_on" %} </b>
+              <br/>
+                {{ todo.created_at }}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <b>{% trans "label_has_reminder" %} </b> 
+              <br/>
+                {{todo.needs_reminder}}
+            </td>
+            <td>
+              <b>{% trans "label_due_date" %} </b>
+              <br/>
+              {{ todo.expires_at|expired_due_date|safe }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <hr>
+
+      <p>
+        <a href="{{next}}?next={{request.path}}" class="btn btn-link">&larr; {% trans "link_back" %}</a>
+        
+        {% if user == todo.user %}          
+        |
+        <a href="{% url 'todos.share' todo.id %}?next={{request.path}}" class="btn btn-link">{% trans "link_share" %}</a> |
+        <a href="{% url 'todos.update' todo.id %}?next={{request.path}}" class="btn btn-link">{% trans "link_edit" %}</a>
+        {% endif %}
+      </p>
+    </div>
+  </div>
+
+  <div>
+    <h4>{% trans "title_comments" %}</h4>
+    <hr>
+    {% for comment in comments %}
+    <p>
+      &gt;&gt;
+      <strong>{{ comment.author.first_name }}</strong>
+      <br>
+      {{ comment.content }}
+    </p>
+    <p><small>{{ comment.created_at }}</small></p>
+    <br>
+    {% empty %}
+    <p>{% trans "text_no_comments" %}</p>
+    <br>
+    {% endfor %}
+  </div>
+    <div class="card">
+      <div class="card-header">
+        {% trans "title_leave_a_comment" %}
+      </div>
+
+      <div class="card-body card-block">
+        <form method="post">
+          {% csrf_token %}
+
+          <div class="row form-group">
+            <div class="col col-md-3">
+              <label for="hf-content" class=" form-control-label">{% trans "label_comment" %} *</label>
+            </div>
+            <div class="col-12 col-md-9">
+              <textarea id="hf-content" name="content" placeholder='{% trans "plh_enter_comment" %}' class="form-control"
+                required></textarea>
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col col-md-3">
+              <label for="" class=" form-control-label"></label>
+            </div>
+            <div class="col-12 col-md-9">
+              <button type="submit" class="btn btn-primary btn-block">{% trans "btn_submit_comment" %}</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+</div>
+  
+{% if todo.todo_timeline %}
+        
+<div class="col-md-4 col-sm-12">  
+  <div class="card">
+  <div class="card-header">{% trans "title_todo_timeline" %}</div>
+  <div class="card-body">
+  <ul class="timeline">
+
+    {% for x in todo.todo_timeline.all %}      
+    <li>
+      <strong>{{ x.get_todo_status_display|format_todo_status:x.todo_status|safe }}</strong><br>
+      <small><b>{{ x.created_at }}</b></small>
+      <p>{% trans "text_by" %} <u>{{ x.user }}</u></p>
+    </li>
+    {% endfor %}
+
+  </ul>
+</div>
+</div>
+</div>
+
+  {% endif %}
+
+</div>
+  {% endblock %}

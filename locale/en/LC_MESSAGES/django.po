@@ -1,0 +1,776 @@
+#: .\app_todo\templates\dashboard.html:8
+msgid "title_user_dashboard"
+msgstr "User Dashboard"
+
+#: .\app_todo\templates\dashboard.html:23
+msgid "label_total_workspaces"
+msgstr "Total Workspaces"
+
+#: .\app_todo\templates\dashboard.html:32
+msgid "label_total_pending_todos"
+msgstr "Total Pending Todos"
+
+#: .\app_todo\templates\dashboard.html:41
+msgid "label_total_shared_in_todos"
+msgstr "Total shared-in Todos"
+
+#: .\app_todo\templates\dashboard.html:50
+msgid "label_total_shared_out_todos"
+msgstr "Total shared-out Todos"
+
+#: .\app_todo\templates\dashboard.html:59
+msgid "label_todays_todos"
+msgstr "Today's Todos"
+
+#: .\app_todo\templates\dashboard.html:69
+msgid "text_dear"
+msgstr "Dear"
+
+#: .\app_todo\templates\dashboard.html:71
+msgid "text_welcome_to_our_app"
+msgstr "Welcome to our precious Todo Manager"
+
+#: .\app_todo\templates\dashboard.html:75
+msgid "text_start_by_creating_a_workspace"
+msgstr "Start by creating a Workspace"
+
+#: .\app_todo\templates\dashboard.html:78
+msgid "link_create_workspace"
+msgstr "Create Workspace"
+
+#: .\app_todo\templates\dashboard.html:82
+msgid "text_or"
+msgstr "OR"
+
+#: .\app_todo\templates\dashboard.html:85
+msgid "text_activate_if_have_shared_workspace"
+msgstr "Activate a Workspace if you have one in your shared workspaces"
+
+#: .\app_todo\templates\dashboard.html:92 .\app_todo\templates\inc\nav.html:133
+msgid "label_shared_workspaces"
+msgstr "Shared Workspaces: "
+
+#: .\app_todo\templates\errors\email_verification_failed.html:6
+#: .\app_todo\templates\errors\email_verification_failed.html:10
+msgid "text_email_verification_failed"
+msgstr "Email Verification Failed"
+
+#: .\app_todo\templates\inc\layout.html:82
+#: .\app_todo\templates\search-result.html:22
+msgid "plh_search_todos_users_workspaces"
+msgstr "Search for todos, users, workspaces ..."
+
+#: .\app_todo\templates\inc\layout.html:95
+msgid "text_you_have"
+msgstr "You have"
+
+#: .\app_todo\templates\inc\layout.html:95
+msgid "text_notifications"
+msgstr "Notifications"
+
+#: .\app_todo\templates\inc\layout.html:100
+msgid "text_all_notifications"
+msgstr "All Notifications"
+
+#: .\app_todo\templates\inc\layout.html:171
+#: .\app_todo\templates\inc\layout.html:182
+msgid "title_dashboard"
+msgstr "Dashboard"
+
+#: .\app_todo\templates\inc\layout.html:192
+msgid "btn_new_todo"
+msgstr "New Todo"
+
+#: .\app_todo\templates\inc\layout.html:231
+msgid "text_copy_right"
+msgstr "Copyright"
+
+#: .\app_todo\templates\inc\layout.html:231
+msgid "text_all_rights_reserved"
+msgstr "All rights reserved."
+
+#: .\app_todo\templates\inc\nav.html:14
+msgid "link_sign_out"
+msgstr "Sign out"
+
+#: .\app_todo\templates\inc\nav.html:16
+msgid "text_please_login"
+msgstr "Please log in."
+
+#: .\app_todo\templates\inc\nav.html:28
+msgid "label_current_workspace"
+msgstr "Current Workspace: "
+
+#: .\app_todo\templates\inc\nav.html:50
+msgid "nav_dashboard"
+msgstr "Dashboard"
+
+#: .\app_todo\templates\inc\nav.html:55
+msgid "nav_recent_todos"
+msgstr "Recent Todos"
+
+#: .\app_todo\templates\inc\nav.html:60
+msgid "nav_pending_todos"
+msgstr "Pending Todos"
+
+#: .\app_todo\templates\inc\nav.html:66
+msgid "nav_private_todos"
+msgstr "Private Todos"
+
+#: .\app_todo\templates\inc\nav.html:71
+msgid "nav_all_todos"
+msgstr "All Todos"
+
+#: .\app_todo\templates\inc\nav.html:76
+msgid "nav_shared_in_todos"
+msgstr "Shared-In Todos"
+
+#: .\app_todo\templates\inc\nav.html:82
+msgid "nav_shared_out_todos"
+msgstr "Shared-Out Todos"
+
+#: .\app_todo\templates\inc\nav.html:88
+msgid "nav_archived_todos"
+msgstr "Archived Todos"
+
+#: .\app_todo\templates\inc\nav.html:93
+msgid "nav_trashed_todos"
+msgstr "Trashed Todos"
+
+#: .\app_todo\templates\inc\nav.html:103
+msgid "link_new_workspace"
+msgstr "+ NEW WORKSPACE"
+
+#: .\app_todo\templates\inc\nav.html:113
+msgid "label_my_workspaces"
+msgstr "My Workspaces: "
+
+#: .\app_todo\templates\inc\nav.html:116
+#: .\app_todo\templates\todo\inc\todo-filter.html:17
+msgid "opt_select"
+msgstr "- select"
+
+#: .\app_todo\templates\inc\nav.html:149
+msgid "nav_all_workspaces"
+msgstr "All Workspaces"
+
+#: .\app_todo\templates\inc\nav.html:156
+msgid "nav_language"
+msgstr "Language"
+
+#: .\app_todo\templates\notification\notification-list.html:6
+#: .\app_todo\templates\notification\notification-list.html:21
+#: .\app_todo\templates\notification\notification-list.html:26
+msgid "title_unread_notifications"
+msgstr "Unread Notifications"
+
+#: .\app_todo\templates\notification\notification-list.html:21
+msgid "tooltip_unread_notifications"
+msgstr "The panel in this page shows fully detailed list of unread Notifications"
+
+#: .\app_todo\templates\notification\notification-list.html:40
+msgid "text_there_are_no_unread_records"
+msgstr "There are No unread Notifications"
+
+#: .\app_todo\templates\search-result.html:8
+#: .\app_todo\templates\search-result.html:41
+#: .\app_todo\templates\search-result.html:46
+msgid "title_search_result"
+msgstr "Search Result"
+
+#: .\app_todo\templates\search-result.html:27
+msgid "btn_search"
+msgstr "Search"
+
+#: .\app_todo\templates\search-result.html:41
+msgid "tooltip_search_results"
+msgstr "The table in this page shows the list of search results"
+
+#: .\app_todo\templates\search-result.html:52
+msgid "label_data"
+msgstr "Data: "
+
+#: .\app_todo\templates\search-result.html:63
+msgid "label_type"
+msgstr "Type: "
+
+#: .\app_todo\templates\search-result.html:75
+msgid "link_view_details"
+msgstr "View Details"
+
+#: .\app_todo\templates\search-result.html:86
+#: .\app_todo\templates\todo\todos-archived.html:73
+#: .\app_todo\templates\todo\todos-by-user.html:101
+#: .\app_todo\templates\todo\todos-mine-all.html:109
+#: .\app_todo\templates\todo\todos-mine.html:96
+#: .\app_todo\templates\todo\todos-pending.html:90
+#: .\app_todo\templates\todo\todos-recent.html:98
+#: .\app_todo\templates\todo\todos-shared-in.html:90
+#: .\app_todo\templates\todo\todos-shared-out.html:98
+#: .\app_todo\templates\todo\todos-trashed.html:64
+#: .\app_todo\templates\workspace\workspaces-list.html:61
+msgid "text_no_records_found"
+msgstr "No records found."
+
+#: .\app_todo\templates\todo\inc\todo-filter.html:7
+msgid "label_due_from_date"
+msgstr "Due From Date"
+
+#: .\app_todo\templates\todo\inc\todo-filter.html:8
+#: .\app_todo\templates\todo\inc\todo-filter.html:12
+msgid "plh_select_date"
+msgstr "Select date"
+
+#: .\app_todo\templates\todo\inc\todo-filter.html:11
+msgid "label_due_to_date"
+msgstr "Due To Date"
+
+#: .\app_todo\templates\todo\inc\todo-filter.html:15
+msgid "label_todo_status"
+msgstr "Todo Status"
+
+#: .\app_todo\templates\todo\inc\todo-filter.html:29
+msgid "btn_filter"
+msgstr "Filter"
+
+#: .\app_todo\templates\todo\inc\todo-filter.html:32
+msgid "btn_reset"
+msgstr "Reset"
+
+#: .\app_todo\templates\todo\todo-confirm-delete.html:6
+#: .\app_todo\templates\todo\todo-confirm-delete.html:26
+msgid "title_delete_todo"
+msgstr "Delete Todo"
+
+#: .\app_todo\templates\todo\todo-confirm-delete.html:21
+msgid "tooltip_delete_todo"
+msgstr "The form in this page enables you to confirm deletion of the selected Todo"
+
+#: .\app_todo\templates\todo\todo-confirm-delete.html:37
+msgid "note_do_you_want_to_delete_todo"
+msgstr "Are you sure you want to delete the Todo?"
+
+#: .\app_todo\templates\todo\todo-confirm-delete.html:48
+#: .\app_todo\templates\workspace\workspace-share.html:46
+msgid "link_cancel"
+msgstr "Cancel"
+
+#: .\app_todo\templates\todo\todo-confirm-delete.html:52
+msgid "btn_confirm"
+msgstr "Confirm"
+
+#: .\app_todo\templates\todo\todo-create.html:7
+#: .\app_todo\templates\todo\todo-create.html:55
+msgid "title_edit_todo"
+msgstr "Edit Todo"
+
+#: .\app_todo\templates\todo\todo-create.html:9
+#: .\app_todo\templates\todo\todo-create.html:48
+#: .\app_todo\templates\todo\todo-create.html:57
+msgid "title_create_todo"
+msgstr "Create Todo"
+
+#: .\app_todo\templates\todo\todo-create.html:48
+msgid "tooltip_create_todo"
+msgstr "The form in this page enables you to create a new Todo for your self or that you can share it to your colleagues who are using this service"
+
+#: .\app_todo\templates\todo\todo-create.html:67
+msgid "label_title"
+msgstr "Title"
+
+#: .\app_todo\templates\todo\todo-create.html:71
+msgid "plh_enter_title"
+msgstr "Enter title..."
+
+#: .\app_todo\templates\todo\todo-create.html:76
+msgid "label_description"
+msgstr "Description"
+
+#: .\app_todo\templates\todo\todo-create.html:80
+msgid "plh_enter_description"
+msgstr "Enter description..."
+
+#: .\app_todo\templates\todo\todo-create.html:85
+#: .\app_todo\templates\todo\todo-detail.html:113
+msgid "label_attachments"
+msgstr "Attachments"
+
+#: .\app_todo\templates\todo\todo-create.html:94
+#: .\app_todo\templates\todo\todo-detail.html:134
+msgid "label_duration"
+msgstr "Duration (hrs)"
+
+#: .\app_todo\templates\todo\todo-create.html:98
+msgid "plh_enter_duration"
+msgstr "Enter duration..."
+
+#: .\app_todo\templates\todo\todo-create.html:103
+#: .\app_todo\templates\todo\todo-detail.html:163
+msgid "label_due_date"
+msgstr "Due Date"
+
+#: .\app_todo\templates\todo\todo-create.html:107
+msgid "pl_due_date"
+msgstr "Enter Due date..."
+
+#: .\app_todo\templates\todo\todo-create.html:112
+msgid "label_want_a_reminder"
+msgstr "Want a Reminder?"
+
+#: .\app_todo\templates\todo\todo-create.html:127
+msgid "text_yes_i_want_a_reminder"
+msgstr "Yes, I want to receive a Reminder."
+
+#: .\app_todo\templates\todo\todo-create.html:151
+#: .\app_todo\templates\todo\todo-detail.html:139
+#: .\app_todo\templates\workspace\workspace-create.html:71
+msgid "label_record_status"
+msgstr "Record Status"
+
+#: .\app_todo\templates\todo\todo-create.html:172
+#: .\app_todo\templates\todo\todo-detail.html:173
+#: .\app_todo\templates\todo\todo-share.html:54
+#: .\app_todo\templates\user\language-change.html:48
+#: .\app_todo\templates\user\user-profile-update.html:86
+#: .\app_todo\templates\user\user-profile.html:33
+#: .\app_todo\templates\workspace\workspace-create.html:92
+#: .\app_todo\templates\workspace\workspace-detail.html:73
+msgid "link_back"
+msgstr "Back"
+
+#: .\app_todo\templates\todo\todo-create.html:175
+#: .\app_todo\templates\workspace\workspace-create.html:95
+msgid "btn_save"
+msgstr "Save"
+
+#: .\app_todo\templates\todo\todo-detail.html:7
+#: .\app_todo\templates\todo\todo-detail.html:81
+#: .\app_todo\templates\todo\todo-detail.html:86
+msgid "title_todo_details"
+msgstr "Todo Details"
+
+#: .\app_todo\templates\todo\todo-detail.html:55
+msgid "label_todo_workspace"
+msgstr "Todo Workspace: "
+
+#: .\app_todo\templates\todo\todo-detail.html:61
+msgid "note_todo_workspace_currently_not_active"
+msgstr "The Workspace for the selected Todo is not currently active. You might want to switch to the workspace of the selected Todo so that you can see other todos in the same Workspace as this Todo."
+
+#: .\app_todo\templates\todo\todo-detail.html:67
+msgid "note_switching_workspace"
+msgstr "You are switching the workspace"
+
+#: .\app_todo\templates\todo\todo-detail.html:67
+msgid "btn_switch_workspace"
+msgstr "Switch Workspace"
+
+#: .\app_todo\templates\todo\todo-detail.html:81
+msgid "tooltip_todo_details"
+msgstr "The panel in this page shows all the detailed information about the selected Todo"
+
+#: .\app_todo\templates\todo\todo-detail.html:100
+msgid "label_shared_with"
+msgstr "Shared with: "
+
+#: .\app_todo\templates\todo\todo-detail.html:107
+#: .\app_todo\templates\todo\todo-detail.html:123
+#: .\app_todo\templates\todo\todos-mine-all.html:61
+#: .\app_todo\templates\workspace\workspace-detail.html:50
+msgid "text_none"
+msgstr "N/A"
+
+#: .\app_todo\templates\todo\todo-detail.html:146
+#: .\app_todo\templates\workspace\workspace-detail.html:59
+msgid "label_created_by"
+msgstr "Created by: "
+
+#: .\app_todo\templates\todo\todo-detail.html:151
+#: .\app_todo\templates\workspace\workspace-detail.html:64
+msgid "label_created_on"
+msgstr "Created on: "
+
+#: .\app_todo\templates\todo\todo-detail.html:158
+msgid "label_has_reminder"
+msgstr "Has Reminder: "
+
+#: .\app_todo\templates\todo\todo-detail.html:177
+#: .\app_todo\templates\workspace\workspace-detail.html:76
+msgid "link_share"
+msgstr "Share"
+
+#: .\app_todo\templates\todo\todo-detail.html:178
+#: .\app_todo\templates\user\user-profile.html:42
+#: .\app_todo\templates\workspace\workspace-detail.html:77
+msgid "link_edit"
+msgstr "Edit"
+
+#: .\app_todo\templates\todo\todo-detail.html:185
+msgid "title_comments"
+msgstr "Comments"
+
+#: .\app_todo\templates\todo\todo-detail.html:197
+msgid "text_no_comments"
+msgstr "No comments yet."
+
+#: .\app_todo\templates\todo\todo-detail.html:203
+msgid "title_leave_a_comment"
+msgstr "Leave a Comment"
+
+#: .\app_todo\templates\todo\todo-detail.html:212
+msgid "label_comment"
+msgstr "Comment"
+
+#: .\app_todo\templates\todo\todo-detail.html:215
+msgid "plh_enter_comment"
+msgstr "Enter comment ..."
+
+#: .\app_todo\templates\todo\todo-detail.html:225
+msgid "btn_submit_comment"
+msgstr "Submit Comment"
+
+#: .\app_todo\templates\todo\todo-detail.html:238
+msgid "title_todo_timeline"
+msgstr "Todo Timeline"
+
+#: .\app_todo\templates\todo\todo-detail.html:246
+msgid "text_by"
+msgstr "by"
+
+#: .\app_todo\templates\todo\todo-share.html:7
+#: .\app_todo\templates\todo\todo-share.html:22
+#: .\app_todo\templates\todo\todo-share.html:28
+msgid "title_share_todo"
+msgstr "Share Todo"
+
+#: .\app_todo\templates\todo\todo-share.html:22
+msgid "tooltip_share_todo"
+msgstr "The form in this page enables you to share the selected Todo to your colleagues who are using this service"
+
+#: .\app_todo\templates\todo\todo-share.html:36
+msgid "label_todo_title"
+msgstr "Todo Title"
+
+#: .\app_todo\templates\todo\todo-share.html:44
+#: .\app_todo\templates\workspace\workspace-detail.html:43
+#: .\app_todo\templates\workspace\workspace-share.html:36
+msgid "label_share_with"
+msgstr "Share With"
+
+#: .\app_todo\templates\todo\todo-share.html:47
+#: .\app_todo\templates\workspace\workspace-share.html:40
+msgid "plh_search_by_name_email_username"
+msgstr "Search by Name, Email, or Username..."
+
+#: .\app_todo\templates\todo\todo-share.html:58
+#: .\app_todo\templates\workspace\workspace-share.html:50
+msgid "btn_share"
+msgstr "Share"
+
+#: .\app_todo\templates\todo\todos-archived.html:6
+#: .\app_todo\templates\todo\todos-archived.html:19
+#: .\app_todo\templates\todo\todos-archived.html:24
+msgid "title_archived_todos"
+msgstr "Archived Todos"
+
+#: .\app_todo\templates\todo\todos-archived.html:19
+msgid "tooltip_archived_todos"
+msgstr "The table in this page shows the list of archived todos in anyway linked to the current user"
+
+#: .\app_todo\templates\todo\todos-archived.html:31
+#: .\app_todo\templates\todo\todos-by-user.html:39
+#: .\app_todo\templates\todo\todos-mine-all.html:36
+#: .\app_todo\templates\todo\todos-mine.html:35
+#: .\app_todo\templates\todo\todos-pending.html:31
+#: .\app_todo\templates\todo\todos-recent.html:38
+#: .\app_todo\templates\todo\todos-shared-in.html:31
+#: .\app_todo\templates\todo\todos-shared-out.html:31
+#: .\app_todo\templates\todo\todos-trashed.html:31
+#: .\app_todo\templates\workspace\workspaces-list.html:34
+msgid "col_roll_num"
+msgstr "No."
+
+#: .\app_todo\templates\todo\todos-archived.html:32
+#: .\app_todo\templates\todo\todos-by-user.html:40
+#: .\app_todo\templates\todo\todos-mine-all.html:37
+#: .\app_todo\templates\todo\todos-mine.html:36
+#: .\app_todo\templates\todo\todos-pending.html:32
+#: .\app_todo\templates\todo\todos-recent.html:39
+#: .\app_todo\templates\todo\todos-shared-in.html:32
+#: .\app_todo\templates\todo\todos-shared-out.html:32
+#: .\app_todo\templates\todo\todos-trashed.html:32
+msgid "col_title"
+msgstr "Title"
+
+#: .\app_todo\templates\todo\todos-archived.html:33
+#: .\app_todo\templates\todo\todos-by-user.html:41
+#: .\app_todo\templates\todo\todos-mine-all.html:38
+#: .\app_todo\templates\todo\todos-pending.html:33
+#: .\app_todo\templates\todo\todos-recent.html:40
+#: .\app_todo\templates\todo\todos-shared-in.html:33
+#: .\app_todo\templates\todo\todos-trashed.html:33
+#: .\app_todo\templates\workspace\workspaces-list.html:36
+msgid "col_created_by"
+msgstr "Created By"
+
+#: .\app_todo\templates\todo\todos-archived.html:34
+#: .\app_todo\templates\todo\todos-by-user.html:42
+#: .\app_todo\templates\todo\todos-mine-all.html:39
+#: .\app_todo\templates\todo\todos-mine.html:37
+#: .\app_todo\templates\todo\todos-pending.html:34
+#: .\app_todo\templates\todo\todos-recent.html:41
+#: .\app_todo\templates\todo\todos-shared-in.html:34
+#: .\app_todo\templates\todo\todos-shared-out.html:34
+#: .\app_todo\templates\todo\todos-trashed.html:34
+#: .\app_todo\templates\workspace\workspaces-list.html:37
+msgid "col_created_on"
+msgstr "Created On"
+
+#: .\app_todo\templates\todo\todos-archived.html:35
+#: .\app_todo\templates\todo\todos-by-user.html:43
+#: .\app_todo\templates\todo\todos-mine-all.html:40
+#: .\app_todo\templates\todo\todos-mine.html:38
+#: .\app_todo\templates\todo\todos-pending.html:35
+#: .\app_todo\templates\todo\todos-recent.html:42
+#: .\app_todo\templates\todo\todos-shared-in.html:35
+#: .\app_todo\templates\todo\todos-shared-out.html:35
+#: .\app_todo\templates\todo\todos-trashed.html:35
+msgid "col_due_date"
+msgstr "Due Date"
+
+#: .\app_todo\templates\todo\todos-archived.html:36
+#: .\app_todo\templates\todo\todos-by-user.html:44
+#: .\app_todo\templates\workspace\workspaces-list.html:38
+msgid "col_status"
+msgstr "Status"
+
+#: .\app_todo\templates\todo\todos-by-user.html:6
+#: .\app_todo\templates\todo\todos-by-user.html:24
+#: .\app_todo\templates\todo\todos-by-user.html:29
+msgid "title_todos_shared_with_user"
+msgstr "Todos shared with"
+
+#: .\app_todo\templates\todo\todos-by-user.html:24
+msgid "tooltip_todos_shared_with_user"
+msgstr "The table in this page shows the list of Todos that are share with the selected user"
+
+#: .\app_todo\templates\todo\todos-mine-all.html:6
+#: .\app_todo\templates\todo\todos-mine-all.html:19
+#: .\app_todo\templates\todo\todos-mine-all.html:24
+msgid "title_all_todos"
+msgstr "All Todos"
+
+#: .\app_todo\templates\todo\todos-mine-all.html:19
+msgid "tooltip_all_todos"
+msgstr "The table in this page shows the list of all todos in anyway linked to the current user"
+
+#: .\app_todo\templates\todo\todos-mine-all.html:41
+#: .\app_todo\templates\todo\todos-shared-out.html:33
+msgid "col_shared_with"
+msgstr "Shared With"
+
+#: .\app_todo\templates\todo\todos-mine-all.html:42
+#: .\app_todo\templates\todo\todos-mine.html:39
+#: .\app_todo\templates\todo\todos-pending.html:36
+#: .\app_todo\templates\todo\todos-recent.html:43
+#: .\app_todo\templates\todo\todos-shared-in.html:36
+#: .\app_todo\templates\todo\todos-shared-out.html:36
+#: .\app_todo\templates\todo\todos-trashed.html:36
+msgid "col_todo_status"
+msgstr "Todo Status"
+
+#: .\app_todo\templates\todo\todos-mine-all.html:43
+#: .\app_todo\templates\todo\todos-mine.html:40
+msgid "col_record_status"
+msgstr "Record Status"
+
+#: .\app_todo\templates\todo\todos-mine.html:6
+#: .\app_todo\templates\todo\todos-mine.html:19
+#: .\app_todo\templates\todo\todos-mine.html:24
+msgid "title_private_todos"
+msgstr "Private Todos"
+
+#: .\app_todo\templates\todo\todos-mine.html:19
+msgid "tooltip_private_todos"
+msgstr "The table in this page shows the list of all private todos linked to the current user"
+
+#: .\app_todo\templates\todo\todos-pending.html:6
+#: .\app_todo\templates\todo\todos-pending.html:19
+#: .\app_todo\templates\todo\todos-pending.html:24
+msgid "title_pending_todos"
+msgstr "Pending Todos"
+
+#: .\app_todo\templates\todo\todos-pending.html:19
+msgid "tooltip_pending_todos"
+msgstr "The table in this page shows the list of pending todos in anyway linked to the current user"
+
+#: .\app_todo\templates\todo\todos-recent.html:6
+#: .\app_todo\templates\todo\todos-recent.html:23
+#: .\app_todo\templates\todo\todos-recent.html:28
+msgid "title_recent_todos"
+msgstr "Recent Todos"
+
+#: .\app_todo\templates\todo\todos-recent.html:23
+msgid "tooltip_recent_todos"
+msgstr "The table in this page shows the list of recently created or modified todos that are active in status and in anyway linked to the current user"
+
+#: .\app_todo\templates\todo\todos-shared-in.html:6
+#: .\app_todo\templates\todo\todos-shared-in.html:19
+#: .\app_todo\templates\todo\todos-shared-in.html:24
+msgid "title_shared_in_todos"
+msgstr "Shared-In Todos"
+
+#: .\app_todo\templates\todo\todos-shared-in.html:19
+msgid "tooltip_shared_in_todos"
+msgstr "The table in this page shows the list of todos that are shared from your colleagues to you"
+
+#: .\app_todo\templates\todo\todos-shared-out.html:6
+#: .\app_todo\templates\todo\todos-shared-out.html:19
+#: .\app_todo\templates\todo\todos-shared-out.html:24
+msgid "title_shared_out_todos"
+msgstr "Shared-Out Todos"
+
+#: .\app_todo\templates\todo\todos-shared-out.html:19
+msgid "tooltip_shared_out_todos"
+msgstr "The table in this page shows the list of todos that are shared from you to your colleagues"
+
+#: .\app_todo\templates\todo\todos-trashed.html:6
+#: .\app_todo\templates\todo\todos-trashed.html:19
+#: .\app_todo\templates\todo\todos-trashed.html:24
+msgid "title_trashed_todos"
+msgstr "Trashed Todos"
+
+#: .\app_todo\templates\todo\todos-trashed.html:19
+msgid "tooltip_trashed_todos"
+msgstr "The table in this page shows the list of todos that are trashed into Trash bin"
+
+#: .\app_todo\templates\todo\todos-trashed.html:55
+msgid "btn_restore"
+msgstr "Restore"
+
+#: .\app_todo\templates\user\language-change.html:7
+#: .\app_todo\templates\user\language-change.html:22
+#: .\app_todo\templates\user\language-change.html:27
+msgid "title_change_language"
+msgstr "Change Language"
+
+#: .\app_todo\templates\user\language-change.html:22
+msgid "tooltip_change_language"
+msgstr "The form in this page enables you to change the display language."
+
+#: .\app_todo\templates\user\language-change.html:35
+msgid "label_language"
+msgstr "Language"
+
+#: .\app_todo\templates\user\language-change.html:52
+msgid "btn_change_language"
+msgstr "Change Language"
+
+#: .\app_todo\templates\user\user-profile-update.html:6
+#: .\app_todo\templates\user\user-profile-update.html:38
+msgid "title_update_profile"
+msgstr "Update Profile"
+
+#: .\app_todo\templates\user\user-profile-update.html:47
+msgid "label_first_name"
+msgstr "First Name"
+
+#: .\app_todo\templates\user\user-profile-update.html:51
+msgid "plh_enter_first_name"
+msgstr "Enter first name..."
+
+#: .\app_todo\templates\user\user-profile-update.html:57
+msgid "label_last_name"
+msgstr "Last Name"
+
+#: .\app_todo\templates\user\user-profile-update.html:61
+msgid "plh_enter_last_name"
+msgstr "Enter last name..."
+
+#: .\app_todo\templates\user\user-profile-update.html:67
+msgid "label_email"
+msgstr "Email"
+
+#: .\app_todo\templates\user\user-profile-update.html:71
+msgid "plh_enter_email"
+msgstr "Enter email..."
+
+#: .\app_todo\templates\user\user-profile-update.html:77
+msgid "label_profile_picture"
+msgstr "Profile Picture"
+
+#: .\app_todo\templates\user\user-profile-update.html:89
+msgid "btn_update"
+msgstr "Update"
+
+#: .\app_todo\templates\user\user-profile.html:7
+#: .\app_todo\templates\user\user-profile.html:22
+msgid "title_user_profile"
+msgstr "User Profile"
+
+#: .\app_todo\templates\user\user-profile.html:37
+msgid "link_shared_todos"
+msgstr "Shared Todos"
+
+#: .\app_todo\templates\user\user-profile.html:40
+msgid "link_change_password"
+msgstr "Change Password"
+
+#: .\app_todo\templates\user\user-profile.html:65
+msgid "note_sign_in_needed"
+msgstr "You need to sign in"
+
+#: .\app_todo\templates\workspace\workspace-create.html:7
+#: .\app_todo\templates\workspace\workspace-create.html:47
+msgid "title_edit_workspace"
+msgstr "Edit Workspace"
+
+#: .\app_todo\templates\workspace\workspace-create.html:9
+#: .\app_todo\templates\workspace\workspace-create.html:49
+msgid "title_create_workspace"
+msgstr "Create Workspace"
+
+#: .\app_todo\templates\workspace\workspace-create.html:59
+#: .\app_todo\templates\workspace\workspace-detail.html:30
+msgid "label_name"
+msgstr "Name"
+
+#: .\app_todo\templates\workspace\workspace-create.html:63
+msgid "plh_enter_name"
+msgstr "Enter name..."
+
+#: .\app_todo\templates\workspace\workspace-detail.html:6
+#: .\app_todo\templates\workspace\workspace-detail.html:26
+msgid "title_workspace_details"
+msgstr "Workspace Details"
+
+#: .\app_todo\templates\workspace\workspace-detail.html:21
+msgid "tooltip_workspace_details"
+msgstr "The panel in this page shows fully detailed information about the selected Workspace"
+
+#: .\app_todo\templates\workspace\workspace-detail.html:36
+msgid "label_status"
+msgstr "Status: "
+
+#: .\app_todo\templates\workspace\workspace-share.html:7
+#: .\app_todo\templates\workspace\workspace-share.html:20
+msgid "title_share_workspace"
+msgstr "Share Workspace"
+
+#: .\app_todo\templates\workspace\workspace-share.html:28
+msgid "label_workspace_name"
+msgstr "Workspace Name"
+
+#: .\app_todo\templates\workspace\workspaces-list.html:6
+#: .\app_todo\templates\workspace\workspaces-list.html:22
+#: .\app_todo\templates\workspace\workspaces-list.html:27
+msgid "title_workspaces"
+msgstr "Workspaces"
+
+#: .\app_todo\templates\workspace\workspaces-list.html:22
+msgid "tooltip_workspaces"
+msgstr "The table in this page shows the list of all Workspaces"
+
+#: .\app_todo\templates\workspace\workspaces-list.html:35
+msgid "col_name"
+msgstr "Name"

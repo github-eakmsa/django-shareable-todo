@@ -1,0 +1,11 @@
+
+{% with path|split:"/" as links %}
+{% for i in links %}
+	<li class="list-inline-item seprate">
+		<span>/</span>
+	</li>
+	<li class="list-inline-item"> 
+		{{i}}
+	</li>
+{% endfor %}
+{% endwith %}

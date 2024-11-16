@@ -1,0 +1,93 @@
+{% extends 'inc/guest-layout.html' %}
+
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+   Contact Us
+{% endblock %}
+
+
+{% block content %}
+<div class="col-md-6 col-sm-12">
+  <div class="card">
+    <div class="card-body">
+      <form action="" method="post" class="form-horizontal">
+
+        {% csrf_token %}
+
+        <div class="row form-group">
+          <div class="col col-md-3">
+            <label for="" class=" form-control-label"></label>
+          </div>
+          <div class="col-12 col-md-9">
+            <h4>Contact Us</h4>
+          </div>
+        </div>
+
+        <div class="row form-group">
+          <div class="col col-md-3">
+            <label for="hf-full_name" class=" form-control-label">Full Name *</label>
+          </div>
+          <div class="col-12 col-md-9">
+            <input type="text" id="hf-full_name" name="full_name" value=""
+              placeholder="Your Full Name" class="form-control" required>
+          </div>
+        </div>
+
+        <div class="row form-group">
+          <div class="col col-md-3">
+            <label for="hf-mobile" class=" form-control-label">Mobile No.</label>
+          </div>
+          <div class="col-12 col-md-9">
+            <input type="text" id="hf-mobile" name="mobile" value=""
+              placeholder="Your Mobile No." class="form-control">
+          </div>
+        </div>
+
+        <div class="row form-group">
+          <div class="col col-md-3">
+            <label for="hf-email" class=" form-control-label">Email</label>
+          </div>
+          <div class="col-12 col-md-9">
+            <input type="text" id="hf-email" name="email" value="{{ user.email }}"
+              placeholder="Your Email" class="form-control">
+          </div>
+        </div>
+
+        <div class="row form-group">
+          <div class="col col-md-3">
+            <label for="hf-message" class=" form-control-label">Your Message *</label>
+          </div>
+          <div class="col-12 col-md-9">
+            <textarea id="hf-message" name="message" value=""
+              placeholder="Your Message" class="form-control" required></textarea>
+          </div>
+        </div>
+
+        <div class="row form-group">
+          <div class="col col-md-3">
+          </div>
+          <div class="col-12 col-md-9">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="col-md-6 col-sm-12">
+  <b>Address</b>
+  <br>
+  <p>Addis Ababa, Ethiopia</p>
+  <br>
+  <b>Phone</b>
+  <br>
+  <p>0909809879</p>
+  <br>
+  <b>Email</b>
+  <br>
+  <p>info@letsdoit.com</p>
+  <br>
+</div>
+{% endblock %}
