@@ -1,0 +1,5 @@
+The status for the Todo [${todoTitle}] has been changed to [${todoStatus}] by <${actorFirstName}>.
+
+Click the link below to see details
+
+${todoDetailLink}

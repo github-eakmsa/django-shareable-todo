@@ -1,0 +1,104 @@
+{% extends 'inc/layout.html' %}
+
+{% load i18n %}
+
+{% block title %}
+	{% if form.instance.pk %}
+		{% trans "title_edit_workspace" %}
+	{% else %}
+		{% trans "title_create_workspace" %}
+	{% endif %} 
+{% endblock %}
+
+{% block breadcrumb %}
+{% if form.instance.pk %}
+{% include "inc/breadcrumb.html" with path="Workspaces/Update" only %}
+{% else %}
+{% include "inc/breadcrumb.html" with path="Workspaces/Create" only %}
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+	<div class="col-md-10 col-sm-12">
+        
+        {% if form.errors %}
+
+            {% for field in form %}
+                {% for error in field.errors %}
+                <p class="text-danger">
+                    {{error}}
+                </p>
+                {% endfor %}
+            {% endfor %}
+            
+            {% for error in form.non_field_errors %}
+                <p class="text-danger">
+                    {{error}}
+                </p>                
+            {% endfor %}
+                
+                
+        {% endif %}
+
+		<div class="card">
+			<div class="card-header">
+				{% if form.instance.pk %}
+				{% trans "title_edit_workspace" %}
+				{% else %}
+				{% trans "title_create_workspace" %}
+				{% endif %}
+			</div>
+			<div class="card-body card-block">
+				<form action="" method="post" class="form-horizontal">
+
+					{% csrf_token %}
+
+					<div class="row form-group">
+						<div class="col col-md-3">
+							<label for="hf-name" class=" form-control-label">{% trans "label_name" %} *</label>
+						</div>
+						<div class="col-12 col-md-9">
+							<input type="text" id="hf-name" name="name" value="{{ form.instance.name }}"
+								placeholder='{% trans "plh_enter_name" %}' class="form-control" required>
+						</div>
+					</div>
+
+					{% if form.instance.pk %}
+
+					<div class="row form-group">
+						<div class="col col-md-3">
+							<label for="hf-status" class=" form-control-label">{% trans "label_record_status" %}</label>
+						</div>
+						<div class="col-12 col-md-9">
+							<select id="hf-status" name="status" class="form-control">
+								{% for key, value in record_statuses %}
+
+								{% if form.instance.status == key %}
+								<option value="{{key}}" selected>{{value}}</option>
+								{% else %}
+								<option value="{{key}}">{{value}}</option>
+								{% endif %}
+
+								{% endfor %}
+							</select>
+						</div>
+					</div>
+
+					{% endif %}
+
+					<div class="row form-group">
+						<div class="col col-md-3">
+							<a href="{{next}}?next={{request.path}}" class="btn btn-link">&larr;{% trans "link_back" %}</a>
+						</div>
+						<div class="col-12 col-md-9">
+							<button type="submit" class="btn btn-primary btn-block">{% trans "btn_save" %}</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+	</div>
+</div>
+{% endblock %}

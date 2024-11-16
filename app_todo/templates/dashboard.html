@@ -1,0 +1,115 @@
+{% extends 'inc/layout.html' %}
+
+{% load static %}
+
+{% load i18n %}
+
+{% block title %}
+   {% trans "title_user_dashboard" %}
+{% endblock %}
+    
+{% block page_style_and_script %}
+<link href=" {% static 'vendor/vector-map/jqvmap.min.css' %}" rel="stylesheet" media="all">
+{% endblock %}
+
+{% block content %}
+
+{% if CURRENT_WORKSPACE %}
+
+<div class="row">
+    <div class="col-md-6 col-lg-3">
+    <div class="statistic__item">
+        <h2 class="number">{{workspaces}}</h2>
+        <span class="desc">{% trans "label_total_workspaces" %}</span>
+        <div class="icon">
+            <i class="zmdi zmdi-briefcase"></i>
+        </div>
+    </div>
+</div>
+<div class="col-md-6 col-lg-3">
+    <div class="statistic__item">
+        <h2 class="number">{{pending_todos}}</h2>
+        <span class="desc">{% trans "label_total_pending_todos" %}</span>
+        <div class="icon">
+            <i class="zmdi zmdi-spinner"></i>
+        </div>
+    </div>
+</div>
+<div class="col-md-6 col-lg-3">
+    <div class="statistic__item">
+        <h2 class="number">{{shared_in_todos}}</h2>
+        <span class="desc">{% trans "label_total_shared_in_todos" %}</span>
+        <div class="icon">
+            <i class="zmdi zmdi-mail-forward"></i>
+        </div>
+    </div>
+</div>
+<div class="col-md-6 col-lg-3">
+    <div class="statistic__item">
+        <h2 class="number">{{shared_out_todos}}</h2>
+        <span class="desc">{% trans "label_total_shared_out_todos" %}</span>
+        <div class="icon">
+            <i class="zmdi zmdi-reply"></i>
+        </div>
+    </div>
+</div>
+<div class="col-md-6 col-lg-3">
+    <div class="statistic__item">
+        <h2 class="number">{{todays_todos}}</h2>
+        <span class="desc">{% trans "label_todays_todos" %}</span>
+        <div class="icon">
+            <i class="zmdi zmdi-reply"></i>
+        </div>
+    </div>
+</div>
+</div>
+
+{% else %}
+<p>
+    {% trans "text_dear" %} <b>{{user.first_name}}</b>, 
+    <br/>
+    <span class="text-success">{% trans "text_welcome_to_our_app" %}</span>
+    <br/>
+</p>
+<p>
+    {% trans "text_start_by_creating_a_workspace" %} &gt;&gt;
+    <br/>
+<a href="{% url 'workspaces.create' %}?next={{request.path}}" class="btn btn-link">
+    {% trans "link_create_workspace" %}
+</a>
+</p>
+<p>
+    {% trans "text_or" %}
+</p>
+<p>
+    {% trans "text_activate_if_have_shared_workspace" %}&gt;&gt;
+    <br/>
+    {% if SHARED_WORKSPACES %}
+    <form method="post" action="{% url 'workspaces.change' %}">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.path }}"/>
+        <small>
+            {% trans "label_shared_workspaces" %}
+        </small>
+        <select name="workspace" class="form-control" onchange="this.form.submit()">
+            <option value="" hidden>- select</option>
+            {% for wspace in SHARED_WORKSPACES %}
+            <option value="{{ wspace.id }}" {% if CURRENT_WORKSPACE.id == wspace.id %} selected {% endif %}>{{ wspace.name }}</option>
+            {% endfor %}
+        </select>
+    </form>
+    {% endif %}
+
+</p>
+
+<br/>
+{% endif %}
+
+{% endblock %}
+
+{% block page_bottom_script %}
+    <script src="{% static 'vendor/vector-map/jquery.vmap.js' %}"></script>
+    <script src="{% static 'vendor/vector-map/jquery.vmap.min.js' %}"></script>
+    <script src="{% static 'vendor/vector-map/jquery.vmap.sampledata.js' %}"></script>
+    <script src="{% static 'vendor/vector-map/jquery.vmap.world.js' %}"></script>
+{% endblock %}

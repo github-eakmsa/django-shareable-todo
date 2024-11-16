@@ -1,0 +1,5 @@
+<${actorFirstName}> has shared the Todo [${todoTitle}] with you on ${todoCreationDate}
+
+Click the link below to see details
+
+${todoDetailLink}

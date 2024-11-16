@@ -1,0 +1,93 @@
+{% extends 'inc/layout.html' %}
+
+{% load i18n %}
+
+{% block title %}
+{% trans "title_workspaces" %}
+{% endblock %}
+
+{% block breadcrumb %}
+{% include "inc/breadcrumb.html" with path="Workspace/Details" only %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+
+<div class="col-md-12 col-sm-12">
+  <div class="card">
+
+    <div class="card-header">
+            
+      <!-- help content tooltip -->
+      <a tabindex="0" class="btn btn-link" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" title='{% trans "title_workspaces" %}' data-content='{% trans "tooltip_workspaces" %}'> 
+        <small>
+        <i class="fa fa-question-circle"></i>
+        </small>
+      </a>
+      {% trans "title_workspaces" %}
+    </div>
+
+    <div class="card-body card-block">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>{% trans "col_roll_num" %}</th>
+            <th>{% trans "col_name" %}</th>
+            <th>{% trans "col_created_by" %}</th>
+            <th>{% trans "col_created_on" %}</th>
+            <th>{% trans "col_status" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          {% for item in page_obj %}
+            
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>              
+              {% url 'workspaces.detail' item.id  as workspace_url %}
+              <a href="{{workspace_url}}?next={{request.path}}" class="btn btn-link">
+                {{ item.name }}
+              </a>
+            </td>
+            <td>{{ item.user.username }}</td>
+            <td>{{ item.created_at }}</td>
+            <td>{{ item.get_status_display }}</td>
+          </tr>
+
+            {% empty %}
+
+          <tr>
+            <td colspan="6">{% trans "text_no_records_found" %}</td>
+          </tr>
+
+          {% endfor %}
+
+      </tbody>
+    </table>
+        
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+    
+    </div>
+
+  </div>
+</div>
+
+</div>
+  {% endblock %}

@@ -1,0 +1,85 @@
+
+{% extends 'inc/layout.html' %}
+
+{% load i18n %}
+
+{% block title %}
+{% trans "title_archived_todos" %}
+{% endblock %}
+
+
+{% block page_style_and_script %}  
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+{% endblock %}
+  
+
+{% block breadcrumb %}
+{% include "inc/breadcrumb.html" with path="Todos/Archived" only %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="title-5 m-b-35">
+            
+            <!-- help content tooltip -->
+            <a tabindex="0" class="btn btn-link" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" title='{% trans "title_archived_todos" %}' data-content='{% trans "tooltip_archived_todos" %}'>
+                <small>
+                <i class="fa fa-question-circle"></i>
+                </small>
+            </a>
+            {% trans "title_archived_todos" %}
+        </h3>
+        <div class="table-responsive table-responsive-data2">
+          <table id="myTable" class="display" class="table table-data2">
+            <thead>
+              <tr>
+                <th>Roll No.</th>
+                <th>Title</th>
+                <th>Body</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+        
+    </div>
+</div>
+{% endblock %}
+
+{% block page_bottom_script %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#myTable').DataTable({
+      "processing": true,
+      "serverSide": true,
+      "ajax": {
+        url: "{% url 'datatable_view' %}", // Replace with your Django view URL
+        type: 'GET',
+        data: function (d) {
+          // Additional data to send to the backend for filtering, etc.
+          d.search = $('input[type="search"]').val(); // Example for search term
+        }
+      },
+      "columns": [
+          {"data": "roll_no"},
+          {
+          "data": "title", // Assuming your model has an "action" field for the button functionality
+          "render": function ( data, type, row ) {
+            if (type === 'display') {
+              return '<button class="my-button" data-id="' + row.id + '">'+row.title+'</button>';
+            }
+            return data;
+          }
+        },            
+        //{ "data": "title" },  // Replace with your model field names
+        { "data": "body" },
+        // ... other data properties
+      ]
+    });
+  });
+</script>
+{% endblock %}

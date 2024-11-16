@@ -1,3 +1,65 @@
+<<<<<<< HEAD
+{% extends 'inc/layout.html' %}
+
+{% load i18n %}
+
+{% block title %} 
+   {% trans "title_delete_todo" %}
+{% endblock %}
+
+{% block breadcrumb %}
+{% include "inc/breadcrumb.html" with path="Todo/Delete" only %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+	<div class="col-md-10 col-sm-12">
+    
+<div class="card">
+  <div class="card-header">
+            
+    <!-- help content tooltip -->
+    <a tabindex="0" class="btn btn-link" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" title='{% trans "title_delete_todo" %}' data-content='{% trans "tooltip_delete_todo" %}'>
+      <small>
+      <i class="fa fa-question-circle"></i>
+      </small>
+    </a>
+    {% trans "title_delete_todo" %}
+  </div>
+
+  <div class="card-body">
+    <form method="post">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{next}}">
+      <div class="row form-group">
+        <div class="col-md-2 col-sm-12">
+        </div>
+        <div class="col-md-10 col-sm-12">
+          <p>{% trans "note_do_you_want_to_delete_todo" %}</p>
+          <p class="form-control-static">
+            <q>
+              <b>{{ todo.title|slice:"0:150" }}</b>
+            </q>
+          </p>
+        </div>
+      </div>
+      <div class="row form-group">
+        <div class="col-sm-12 col-md-2">
+          <a href="{{next}}?next={{request.path}}" class="btn btn-link">
+            &larr;{% trans "link_cancel" %}
+          </a>
+        </div>
+        <div class="col-sm-12 col-md-10">
+          <button type="submit" class="btn btn-primary btn-block">{% trans "btn_confirm" %}</button> 
+        </div>
+      </div>
+    </form>   
+  </div>
+  
+  </div>
+  </div>
+  {% endblock %}
+=======
 {% extends 'layout.html' %}
 
 {% block title %}
@@ -14,3 +76,4 @@
   </form>
   <a href="{% url 'todos.mine' %}">Cancel</a>
 {% endblock %}
+>>>>>>> a534c5519ffb00809869d5ff3e31310c4f219296

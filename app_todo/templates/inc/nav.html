@@ -1,0 +1,161 @@
+{% load static %}
+
+{% load i18n %}
+
+<div class="account2">
+    {% comment %} <div class="image img-cir img-120">
+        <img src="{{ user.user_profile.avatar.url }}" style="height:200px" alt="{{user.first_name}}" />
+    </div> {% endcomment %}
+    <h4 class="name">
+        {% if user.is_authenticated %}
+        <a href="{% url 'users.profile' %}?next={{request.path}}">{{ user.get_short_name }}</a>            
+    </h4>
+    <a href="/logout/"><i class="fas fa-sign-out"></i>{% trans 'link_sign_out' %}</a>
+    {% else %}
+        {% trans 'text_please_login' %}
+    {% endif %}   
+</div>
+<nav class="navbar-sidebar2">
+    <ul class="list-unstyled navbar__list">
+
+{% if CURRENT_WORKSPACE %}
+
+{% url 'workspaces.detail' CURRENT_WORKSPACE.id  as active_workspace_url %}
+<li {% if request.path == active_workspace_url %} class="active"{% endif %}>
+    <a href="{% url 'workspaces.detail' CURRENT_WORKSPACE.id %}?next={{request.path}}">
+        <small>
+            {% trans 'label_current_workspace' %}
+            {% if CURRENT_WORKSPACE.user == user %} 
+            [Your Own] 
+            {% else %} 
+            [Shared] 
+            {% endif %}
+        </small>
+        <br/>
+        <b>
+            <u>
+            {{CURRENT_WORKSPACE.name}}
+            </u>
+        </b>
+    </a>
+</li>
+{% endif %}
+
+{% if CURRENT_WORKSPACE %}
+
+{% url 'dashboard' as dashboard_url %}
+<li {% if request.path == dashboard_url %} class="active"{% endif %}>
+    <a href="{{ dashboard_url }}">
+        <i class="fas fa-tachometer-alt"></i>{% trans 'nav_dashboard' %}</a>
+</li>
+{% url 'todos.recent' as recents_url %}
+<li {% if request.path == recents_url %} class="active"{% endif %}>
+    <a href="{{ recents_url }}">
+        <i class="fas fa-clock-o"></i>{% trans 'nav_recent_todos' %}</a>
+</li>
+{% url 'todos.pending' as pendings_url %}
+<li {% if request.path == pendings_url %} class="active"{% endif %}>
+    <a href="{{ pendings_url }}">
+        <i class="fas fa-spinner"></i>{% trans 'nav_pending_todos' %}</a>
+        <span class="inbox-num" id="pending_badge">0</span>
+</li>
+{% url 'todos.mine' as mines_url %}
+<li {% if request.path == mines_url %} class="active"{% endif %}>
+    <a href="{{ mines_url }}">
+        <i class="fas fa-folder"></i>{% trans 'nav_private_todos' %}</a>
+</li>
+{% url 'todos.all-mine' as all_mines_url %}
+<li {% if request.path == all_mines_url %} class="active"{% endif %}>
+    <a href="{{ all_mines_url }}">
+        <i class="fas fa-folder-open"></i>{% trans 'nav_all_todos' %}</a>
+</li>
+{% url 'todos.shared_in' as shared_ins_url %}
+<li {% if request.path == shared_ins_url %} class="active"{% endif %}>
+    <a href="{{ shared_ins_url }}">
+        <i class="fas fa-mail-forward"></i>{% trans 'nav_shared_in_todos' %}</a>
+    <span class="inbox-num" id="shared_in_badge">0</span>
+</li>
+{% url 'todos.shared_out' as shared_out_url %}
+<li {% if request.path == shared_out_url %} class="active"{% endif %}>
+    <a href="{{ shared_out_url }}">
+        <i class="fas fa-reply"></i>{% trans 'nav_shared_out_todos' %}</a>
+        <span class="inbox-num" id="shared_out_badge">0</span>
+</li>
+{% url 'todos.archived' as archived_url %}
+<li {% if request.path == archived_url %} class="active"{% endif %}>
+    <a href="{{ archived_url }}">
+        <i class="fas fa-archive"></i>{% trans 'nav_archived_todos' %}</a>
+</li>
+{% url 'todos.trashed' as trashed_url %}
+<li {% if request.path == trashed_url %} class="active"{% endif %}>
+    <a href="{{ trashed_url }}">
+        <i class="fas fa-trash"></i>{% trans 'nav_trashed_todos' %}</a>
+</li>
+{% else %}
+<li>
+    There is no active workspace. <br>
+    please select a workspace in the bottom or create new workspace
+</li>
+{% endif %}
+
+<li>
+    <a href="{% url 'workspaces.create' %}?next={{request.path}}">{% trans 'link_new_workspace' %}</a>
+</li>
+
+{% if MY_WORKSPACES %}
+<li>
+    <a href="#">
+    <form method="post" action="{% url 'workspaces.change' %}">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.path }}"/>
+        <small>
+            {% trans 'label_my_workspaces' %}
+        </small>
+        <select name="workspace" class="form-control" onchange="this.form.submit()">
+            <option value="" hidden>{% trans 'opt_select' %}</option>
+            {% for wspace in MY_WORKSPACES %}
+                <option value="{{ wspace.id }}" {% if CURRENT_WORKSPACE.id == wspace.id %} selected {% endif %}>{{ wspace.name }}</option>
+            {% endfor %}
+        </select>
+    </form>
+    </a>
+</li>
+{% endif %}
+
+{% if SHARED_WORKSPACES %}
+<li>
+    <a href="#">
+    <form method="post" action="{% url 'workspaces.change' %}">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.path }}"/>
+        <small>
+           {% trans 'label_shared_workspaces' %}
+        </small>
+        <select name="workspace" class="form-control" onchange="this.form.submit()">
+            <option value="" hidden>{% trans 'opt_select' %}</option>
+            {% for wspace in SHARED_WORKSPACES %}
+            <option value="{{ wspace.id }}" {% if CURRENT_WORKSPACE.id == wspace.id %} selected {% endif %}>{{ wspace.name }}</option>
+            {% endfor %}
+        </select>
+    </form>
+    </a>
+</li>
+{% endif %}
+
+{% url 'workspaces.list' as wspaace_list_url %}
+<li {% if request.path == wspaace_list_url %} class="active"{% endif %}>
+    <a href="{{ wspaace_list_url }}?next={{request.path}}">
+    <i class="fa fa-briefcase"></i>{% trans 'nav_all_workspaces' %}
+    </a>
+</li>
+
+{% url 'language.change' as lang_url %}
+<li {% if request.path == lang_url %} class="active"{% endif %}>
+    <a href="{{ lang_url }}?next={{request.path}}">
+    <i class="zmdi zmdi-globe"></i>{% trans 'nav_language' %}
+    </a>
+</li>
+
+    </ul>
+    <br/>
+</nav>

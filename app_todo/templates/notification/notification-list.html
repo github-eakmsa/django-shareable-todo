@@ -1,0 +1,74 @@
+{% extends 'inc/layout.html' %}
+
+{% load i18n %}
+
+{% block title %}
+{% trans "title_unread_notifications" %} 
+{% endblock %}
+
+{% block breadcrumb %}
+{% include "inc/breadcrumb.html" with path="Notifications/Unread" only %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+
+<div class="col-md-10 col-sm-12">
+  <div class="card">
+    <div class="card-header">
+            
+      <!-- help content tooltip -->
+      <a tabindex="0" class="btn btn-link" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" title='{% trans "title_unread_notifications" %}' data-content='{% trans "tooltip_unread_notifications" %}'> 
+        <small>
+        <i class="fa fa-question-circle"></i>
+        </small>
+      </a>
+     {% trans "title_unread_notifications" %}
+    </div>
+
+    <div class="card-body">
+            
+        {% for notify in notifications %}
+
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            {{notify.message}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="markNotificationAsRead({{notify.id}})">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            {% empty %} 
+             {% trans "text_there_are_no_unread_records" %}
+        {% endfor %}
+            
+    </div>
+
+  </div>
+</div>
+
+</div>
+  {% endblock %}
+
+  {% block page_bottom_script %}
+  
+    <script>
+        function markNotificationAsRead(notify) {
+            var url = "{% url 'notification-mark-as-read' pk=0 %}";
+            url_addr = url.replace("0", notify);
+            $.ajax({
+                url: url_addr,
+                method: 'post',
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    'id': notify
+                },
+                dataType: 'json',
+                success: function(data) {
+                    console.log("notification marked as read")
+                    return true;
+                }
+            });
+            
+        }
+    </script>
+
+  {% endblock  %}
