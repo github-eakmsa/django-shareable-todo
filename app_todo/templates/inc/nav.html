@@ -41,12 +41,6 @@
 </li>
 {% endif %}
 
-{% url 'index' as index_url %}
-<li {% if request.path == index_url %} class="active"{% endif %}>
-    <a href="{{ index_url }}">
-        <i class="fas fa-home"></i>{% trans 'Home' %}</a>
-</li>
-
 {% if CURRENT_WORKSPACE %}
 
 {% url 'dashboard' as dashboard_url %}
@@ -172,6 +166,12 @@
     <a href="{{ lang_url }}?next={{request.path}}">
     <i class="zmdi zmdi-globe"></i>{% trans 'nav_language' %}
     </a>
+</li>
+
+{% url 'index' as index_url %}
+<li {% if request.path == index_url %} class="active"{% endif %}>
+    <a href="{{ index_url }}">
+        <i class="fas fa-home"></i>{% trans 'Home' %}</a>
 </li>
 
     </ul>
