@@ -23,10 +23,10 @@
         </div>
         <div class="card-body">
             <div class="mx-auto d-block">
-                <img class="rounded-circle mx-auto d-block" src="{% if user.user_profile.avatar %} {{user.user_profile.avatar.url}} {% endif %}" alt="Card image cap" style="height:200px">
-                <h5 class="text-sm-center mt-2 mb-1">{{ user.first_name }} {{ user.last_name}}</h5>
+                <img class="rounded-circle mx-auto d-block" src="{% if profile.user_profile.avatar %} {{profile.user_profile.avatar.url}} {% endif %}" alt="Card image cap" style="height:200px">
+                <h5 class="text-sm-center mt-2 mb-1">{{ profile.first_name }} {{ profile.last_name}}</h5>
                 <div class="location text-sm-center">
-                    <i class="fa fa-email"></i> {{ user.email }}</div>
+                    <i class="fa fa-email"></i> {{ profile.email }}</div>
             </div>
             <hr>
             <p>
@@ -34,7 +34,7 @@
                 
                 {% if other %}
                 |
-                <a href="{% url 'todos.by_user' user.id %}" class="btn btn-link">{% trans "link_shared_todos" %}</a> 
+                <a href="{% url 'todos.by_user' profile.id %}" class="btn btn-link">{% trans "link_shared_todos" %}</a> 
                 {% else %}
                 |
                 <a href="{% url 'password_change' %}" class="btn btn-link">{% trans "link_change_password" %}</a>

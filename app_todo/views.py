@@ -8,16 +8,16 @@ from django.http import JsonResponse
 from django.db.models import Q
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
-from app_todo.forms import TodoForm, CommentForm, CustomPasswordChangeForm, TodoStatusChangeForm, WorkspaceForm
+from app_todo.forms import FeedbackForm, TodoForm, CommentForm, CustomPasswordChangeForm, TodoStatusChangeForm, WorkspaceForm
 from app_todo.notifications.service import NotificationService
 from app_todo.serializers import NotificationSerializer, FCMTokenSerializer, TodoSerializer
-from .models import ActiveWorkspace, Notification, Todo, TodoAttachment, TodoTimeline, UserProfile, Workspace
+from .models import ActiveWorkspace, Feedback, Notification, Todo, TodoAttachment, TodoTimeline, UserProfile, Workspace
 from django.conf import settings
 from .utils import send_email
 
 from django.template.defaulttags import register
 from django.urls import reverse
-from datetime import date
+from datetime import date, datetime
 from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView
 # ---
 from django.contrib.auth.tokens import default_token_generator
@@ -64,11 +64,25 @@ def expired_due_date(value):
 def index(request):
     return render(request, 'index.html')
 
+def features(request):
+    return render(request, 'features.html')
+
 def about(request):
     return render(request, 'about.html')
 
 def contact(request):
-    return render(request, 'contact.html')
+    context = {}
+    # Check if the HTTP request method is POST (form submission)
+    if request.method == 'POST':
+        form = FeedbackForm(request.POST)
+        if form.is_valid():
+            feedback = form.save(commit=False)
+            if request.user.is_authenticated:
+                feedback.user = request.user
+            feedback.save()
+            context['message'] = "Feedback submitted successfully!"
+
+    return render(request, 'contact.html', context)
 
 def register_page(request):
     context = {}
@@ -251,9 +265,12 @@ def datatable_view(request):
 def user_profile(request):
     context = {}
     if 'user' in request.GET:
-            usr = get_object_or_404(User, pk=request.GET.get('user'))
-            context['user'] = usr
-            context['other'] = True
+        usr = get_object_or_404(User, pk=request.GET.get('user'))
+        context['profile'] = usr
+        context['other'] = True
+    else:
+        context['profile'] = request.user
+
     context['media_url']=settings.MEDIA_URL
     context['next']=request.GET.get('next')
     return render(request, "user/user-profile.html", context)
@@ -265,33 +282,24 @@ def user_profile_update(request):
     if request.method == 'POST':
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
-        email = request.POST.get('email')
-         
-        # Check if a user with the provided email already exists
-        user = User.objects.filter(email=email).exclude(id=request.user.id)
-         
-        if user.exists():
-            # Display an information message if the email is taken
-            context['message'] = "Email already taken!"
-        else:
-            currUser = get_object_or_404(User, pk=request.user.id)
-            currUser.first_name=first_name
-            currUser.last_name=last_name
-            currUser.email=email
-            currUser.save()
-            
-            if 'profile_picture' in request.FILES:
-                profile_picture = request.FILES['profile_picture']
-                profPic = UserProfile.objects.filter(user=request.user).first()
-                if not profPic:
-                    profPic = UserProfile()
-                    profPic.user = request.user
-                profPic.avatar = profile_picture
-                profPic.save()
-            
-            # Display an information message indicating successful account creation
-            context['user'] = currUser
-            context['message'] = "Profile updated Successfully!"
+
+        currUser = get_object_or_404(User, pk=request.user.id)
+        currUser.first_name=first_name
+        currUser.last_name=last_name
+        currUser.save()
+        
+        if 'profile_picture' in request.FILES:
+            profile_picture = request.FILES['profile_picture']
+            profPic = UserProfile.objects.filter(user=request.user).first()
+            if not profPic:
+                profPic = UserProfile()
+                profPic.user = request.user
+            profPic.avatar = profile_picture
+            profPic.save()
+        
+        # Display an information message indicating successful account creation
+        context['user'] = currUser
+        context['message'] = "Profile updated Successfully!"
      
     return render(request, 'user/user-profile-update.html', context)
 
@@ -360,8 +368,6 @@ def todo_update(request, pk):
     context['form'] = TodoForm(instance=todo)
     context['record_statuses'] = settings.RECORD_STATUS_CHOICES
     if request.method == 'POST':
-        # print(request.POST)
-        oldStatus = todo.todo_status
         form = TodoForm(request.POST, request.FILES, instance=todo)
         if form.is_valid():
             form.save()
@@ -374,8 +380,6 @@ def todo_update(request, pk):
                     for file in attachments:
                         todo_attach = TodoAttachment(todo=todo, attachment=file)
                         todo_attach.save()
-            if (request.POST.get('todo_status') != oldStatus) & (request.user != todo.user):
-                 is_notified = sendEmail(todo, 'TODO_STATUS_CHANGE', request.user, todo.user)
             context['message']= "Successfully saved, " + request.POST.get('title')
             context['form'] = TodoForm(instance=todo)
     context['next']=request.GET.get('next')
@@ -391,11 +395,26 @@ def todo_share(request, pk):
     if request.method == 'POST':
         user_id = request.POST.get('user_id')
         user_to_share = get_object_or_404(User, pk=user_id)
-        todo.shared_with.add(user_to_share)
+
+        if user_to_share not in todo.shared_with.all():
+            todo.shared_with.add(user_to_share)
+
         workspace = todo.workspace
+
         if user_to_share not in workspace.shared_with.all():
             workspace.shared_with.add(user_to_share)
-        is_notified = sendEmail(todo, 'TODO_SHARING', request.user, user_to_share)
+
+        notification_service = NotificationService()
+        
+        notifyContext = {
+            'actorFirstName': request.user.first_name,
+            'todoTitle': todo.title,
+            'todoShareDate': str(datetime.now()),
+            'todoDetailLink': str(settings.APP_URL)+str(reverse("todos.detail", args=[todo.id])),
+        }
+
+        notification_service.send_notification(user=user_to_share, template_name="todo_share", context=notifyContext, channels=["in_app", "push"])
+            
         context['message']= "Successfully shared the ToDo."
     context['next']=request.GET.get('next')
     return render(request, 'todo/todo-share.html', context)
@@ -654,11 +673,21 @@ def todo_detail(request, pk):
             comment.todo = todo
             comment.author = request.user
             comment.save()
+
+            notification_service = NotificationService()
+            
+            notifyContext = {
+                'actorFirstName': request.user.first_name,
+                'todoTitle': todo.title,
+                'commentCreationDate': str(comment.created_at),
+                'todoDetailLink': str(settings.APP_URL)+str(reverse("todos.detail", args=[todo.id])),
+            }
+
             if (request.user == todo.user) & bool(list(todo.shared_with.all())):
                  for usr in todo.shared_with.all():
-                    is_notified = sendEmail(todo, 'TODO_COMMENTING', request.user, usr)
+                    notification_service.send_notification(user=usr, template_name="todo_comment", context=notifyContext, channels=["in_app", "push"])
             else:
-                 is_notified = sendEmail(todo, 'TODO_COMMENTING', request.user, todo.user)
+                    notification_service.send_notification(user=todo.user, template_name="todo_comment", context=notifyContext, channels=["in_app", "push"])
             return redirect('todos.detail', pk=todo.pk)
     else:
         context['form'] = CommentForm()
@@ -702,12 +731,16 @@ def todo_status_change(request, pk):
             timelineLog.user = request.user
             timelineLog.todo_status = newStatus
             timelineLog.save()
+
+            if int(newStatus) == int(settings.COMPLETED):
+                todo.completed_at = datetime.now()
+                todo.save()
             
             if (newStatus != oldStatus):
 
                 notification_service = NotificationService()
 
-                context = {
+                notifyContext = {
                     'todoTitle': todo.title,
                     'todoStatus': str(get_choice(settings.TODO_STATUS_CHOICES, todo.todo_status)),
                     'actorFirstName': request.user.first_name,
@@ -715,14 +748,11 @@ def todo_status_change(request, pk):
                 }
                 if (request.user == todo.user) & bool(list(todo.shared_with.all())):
                     for usr in todo.shared_with.all():
-                        notification_service.send_notification(user=usr, template_name="todo_status_change", context=context, channels=["in_app", "push"])
-                        # is_notified = sendEmail(todo, 'TODO_STATUS_CHANGE', request.user, usr)
+                        notification_service.send_notification(user=usr, template_name="todo_status_change", context=notifyContext, channels=["in_app", "push"])
                 elif request.user != todo.user:
-                    notification_service.send_notification(user=todo.user, template_name="todo_status_change", context=context, channels=["in_app", "push"])
-                    is_notified = sendEmail(todo, 'TODO_STATUS_CHANGE', request.user, todo.user)
+                    notification_service.send_notification(user=todo.user, template_name="todo_status_change", context=notifyContext, channels=["in_app", "push"])
                     for usr in todo.shared_with.all().exclude(pk=request.user.id):
-                        notification_service.send_notification(user=usr, template_name="todo_status_change", context=context, channels=["in_app", "push"])
-                        is_notified = sendEmail(todo, 'TODO_STATUS_CHANGE', request.user, usr)
+                        notification_service.send_notification(user=usr, template_name="todo_status_change", context=notifyContext, channels=["in_app", "push"])
             # context['message']= "Successfully changed the todo Status"
             return redirect(request.POST.get('next'))
 
@@ -739,7 +769,8 @@ def workspace_create(request):
             workspace.user = request.user
             workspace.name = request.POST.get('name')
             workspace.save()
-            if bool(request.user.active_workspace) == False:
+            # print(len(request.user.active_workspace.all()))
+            if len(request.user.active_workspace.all()) == 0:
                 # set active workspace in database
                 set_active_workspace(request.user, workspace)
             context['message']= "Successfully saved workspace"
@@ -759,7 +790,7 @@ def workspaces_list(request):
  
     # add the dictionary during initialization
     item_list = Workspace.objects.filter(
-        Q(user=request.user) or Q(shared_with=request.user)
+        Q(user=request.user) | Q(shared_with=request.user)
         )
 
     paginator = Paginator(item_list, 5)  # Show 5 items per page.
@@ -808,8 +839,20 @@ def workspace_share(request, pk):
     if request.method == 'POST':
         user_id = request.POST.get('user_id')
         user_to_share = get_object_or_404(User, pk=user_id)
-        workspace.shared_with.add(user_to_share)
-        is_notified = sendEmail(workspace, 'WORKSPACE_SHARING', request.user, user_to_share)
+        if user_to_share not in workspace.shared_with.all():
+            workspace.shared_with.add(user_to_share)
+
+        notification_service = NotificationService()
+        
+        notifyContext = {
+            'actorFirstName': request.user.first_name,
+            'workspaceName': workspace.name,
+            'workspaceShareDate': datetime.now(),
+            'workspaceDetailLink': str(settings.APP_URL)+str(reverse("workspaces.detail", args=[workspace.id])),
+        }
+        
+        notification_service.send_notification(user=user_to_share, template_name="workspace_share", context=notifyContext, channels=["in_app", "push"])
+        
         context['message']= "Successfully shared the Workspace."
     return render(request, 'workspace/workspace-share.html', context)
 
@@ -916,6 +959,17 @@ def search_users(request):
         return JsonResponse(results, safe=False)
     return JsonResponse([], safe=False)
 
+def getFirebaseConfig(request):
+    config = {
+      'apiKey': settings.FIREBASE_CONFIG['apiKey'],
+      'authDomain': settings.FIREBASE_CONFIG['authDomain'],
+      'projectId': settings.FIREBASE_CONFIG['projectId'],
+      'storageBucket': settings.FIREBASE_CONFIG['storageBucket'],
+      'messagingSenderId': settings.FIREBASE_CONFIG['messagingSenderId'],
+      'appId': settings.FIREBASE_CONFIG['appId'],
+      'measurementId': settings.FIREBASE_CONFIG['measurementId']
+    }
+    return JsonResponse(config)
 class SaveFCMTokenView(APIView):
     # permission_classes = [IsAuthenticated]
 
@@ -1008,72 +1062,3 @@ def send_verification_email(user, request):
     else:
         # Handle email failure case
         return False
-
-def sendEmail(todo, message_type, pub_user=User, sub_user=User):
-    message = "not set" 
-    # Prepare email data 
-    if message_type == 'TODO_STATUS_CHANGE': 
-        recipient_list = [sub_user.email] 
-        subject = "Status Changed for the todo [{todoTitle}..]" 
-        subject = subject.format(todoTitle = str(todo.title[:15]))
-        html_message = "<p>The status for the ToDo <b>{todoTitle}</b> has been changed to <b><u>{todoStatus}</u></b> by <b><u>{actorFirstName}</u></b>. </p><p><a href='{todoDetailLink}'>Click to see details</a></P>"
-        html_message = html_message.format(
-            todoTitle=str(todo.title), 
-            todoStatus=str(get_choice(settings.TODO_STATUS_CHOICES, todo.todo_status)), 
-            actorFirstName=str(pub_user.first_name), 
-            todoDetailLink=str(settings.APP_URL)+str(reverse("todos.detail", args=[todo.id]))
-            )
-    elif message_type == 'TODO_SHARING':
-        recipient_list = [sub_user.email]
-        subject = "The ToDo [{todoTitle} ..] has been shared with you"
-        subject = subject.format(todoTitle = str(todo.title[:15]))
-        html_message = "<p><b>{actorFirstName}</b> has shared the ToDo <b>{todoTitle}</b> with you on <b>{todoCreationDate}</b>.</p><p><a href='{todoDetailLink}'>Click to see details</a></P>"
-        html_message = html_message.format(
-            actorFirstName=str(pub_user.first_name), 
-            todoTitle=str(todo.title), 
-            todoCreationDate=str(todo.created_at), 
-            todoDetailLink=str(settings.APP_URL)+str(reverse("todos.detail", args=[todo.id]))
-            )
-    elif message_type == 'TODO_COMMENTING':
-        recipient_list = [sub_user.email]
-        subject = "Comment is given to the ToDo [{todoTitle} ..]"
-        subject = subject.format(todoTitle = str(todo.title[:15]))
-        html_message = "<p><b>{actorFirstName}</b> has given a comment to the ToDo <b>{todoTitle}</b> on <b>{todoCreationDate}</b>.</p><p><a href='{todoDetailLink}'>Click to see details</a></P>"
-        html_message = html_message.format(
-            actorFirstName=str(pub_user.first_name), 
-            todoTitle=str(todo.title), 
-            todoCreationDate=str(todo.created_at), 
-            todoDetailLink=str(settings.APP_URL)+str(reverse("todos.detail", args=[todo.id]))
-            )
-    elif message_type == 'WORKSPACE_SHARING':
-        recipient_list = [sub_user.email]
-        subject = "The Workspace [{workspaceName} ..] has been shared with you"
-        subject = subject.format(workspaceName = str(todo.name[:15]))
-        html_message = "<p><b>{actorFirstName}</b> has shared the Workspace <b>{workspaceName}</b> with you on <b>{workspaceCreationDate}</b>.</p><p><a href='{workspaceDetailLink}'>Click to see details</a></P>"
-        html_message = html_message.format(
-            actorFirstName=str(pub_user.first_name), 
-            workspaceName=str(todo.name), 
-            workspaceCreationDate=str(todo.created_at), 
-            workspaceDetailLink=str(settings.APP_URL)+str(reverse("workspaces.detail", args=[todo.id]))
-            )
-    elif message_type == 'TEST':
-        recipient_list = ['eakmsa@gmail.com']
-        subject = "Email subject"
-        message = "Email body text"
-        html_message = "<p>Email body HTML</P>"
-
-    # Send email
-    email_sent = send_email(subject, message, recipient_list, html_message=html_message)
-
-    if email_sent:
-        # If email sent successfully, proceed to next step
-        return True
-    else:
-        # Handle email failure case
-        return False
-
-def testMail(request):
-    if sendEmail(Todo, 'TEST', User, User):
-        return JsonResponse({'success': 'Email sent successfully'})
-    else:
-        return JsonResponse({'error': 'Email failed to send'})

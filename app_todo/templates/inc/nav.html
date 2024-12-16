@@ -41,6 +41,12 @@
 </li>
 {% endif %}
 
+{% url 'index' as index_url %}
+<li {% if request.path == index_url %} class="active"{% endif %}>
+    <a href="{{ index_url }}">
+        <i class="fas fa-home"></i>{% trans 'Home' %}</a>
+</li>
+
 {% if CURRENT_WORKSPACE %}
 
 {% url 'dashboard' as dashboard_url %}
@@ -48,59 +54,78 @@
     <a href="{{ dashboard_url }}">
         <i class="fas fa-tachometer-alt"></i>{% trans 'nav_dashboard' %}</a>
 </li>
-{% url 'todos.recent' as recents_url %}
-<li {% if request.path == recents_url %} class="active"{% endif %}>
-    <a href="{{ recents_url }}">
-        <i class="fas fa-clock-o"></i>{% trans 'nav_recent_todos' %}</a>
+<li class="has-sub {% if 'todos' in request.path %} active {% endif %}">
+    <a class="js-arrow" href="#">
+        <i class="fas fa-check-square"></i>Todos
+        <span class="arrow">
+            <i class="fas fa-angle-down"></i>
+        </span>
+    </a>
+    <ul class="list-unstyled navbar__sub-list js-sub-list" style="display: none;">
+        
+        {% url 'todos.recent' as recents_url %}
+        <li {% if request.path == recents_url %} class="active"{% endif %}>
+            <a href="{{ recents_url }}">
+                <i class="fas fa-clock-o"></i>{% trans 'nav_recent_todos' %}</a>
+        </li>
+        {% url 'todos.pending' as pendings_url %}
+        <li {% if request.path == pendings_url %} class="active"{% endif %}>
+            <a href="{{ pendings_url }}">
+                <i class="fas fa-spinner"></i>{% trans 'nav_pending_todos' %}</a>
+                <span class="inbox-num" id="pending_badge">0</span>
+        </li>
+        {% url 'todos.mine' as mines_url %}
+        <li {% if request.path == mines_url %} class="active"{% endif %}>
+            <a href="{{ mines_url }}">
+                <i class="fas fa-folder"></i>{% trans 'nav_private_todos' %}</a>
+        </li>
+        {% url 'todos.all-mine' as all_mines_url %}
+        <li {% if request.path == all_mines_url %} class="active"{% endif %}>
+            <a href="{{ all_mines_url }}">
+                <i class="fas fa-folder-open"></i>{% trans 'nav_all_todos' %}</a>
+        </li>
+        {% url 'todos.shared_in' as shared_ins_url %}
+        <li {% if request.path == shared_ins_url %} class="active"{% endif %}>
+            <a href="{{ shared_ins_url }}">
+                <i class="fas fa-mail-forward"></i>{% trans 'nav_shared_in_todos' %}</a>
+            <span class="inbox-num" id="shared_in_badge">0</span>
+        </li>
+        {% url 'todos.shared_out' as shared_out_url %}
+        <li {% if request.path == shared_out_url %} class="active"{% endif %}>
+            <a href="{{ shared_out_url }}">
+                <i class="fas fa-reply"></i>{% trans 'nav_shared_out_todos' %}</a>
+                <span class="inbox-num" id="shared_out_badge">0</span>
+        </li>
+        {% url 'todos.archived' as archived_url %}
+        <li {% if request.path == archived_url %} class="active"{% endif %}>
+            <a href="{{ archived_url }}">
+                <i class="fas fa-archive"></i>{% trans 'nav_archived_todos' %}</a>
+        </li>
+        {% url 'todos.trashed' as trashed_url %}
+        <li {% if request.path == trashed_url %} class="active"{% endif %}>
+            <a href="{{ trashed_url }}">
+                <i class="fas fa-trash"></i>{% trans 'nav_trashed_todos' %}</a>
+        </li>
+
+    </ul>
 </li>
-{% url 'todos.pending' as pendings_url %}
-<li {% if request.path == pendings_url %} class="active"{% endif %}>
-    <a href="{{ pendings_url }}">
-        <i class="fas fa-spinner"></i>{% trans 'nav_pending_todos' %}</a>
-        <span class="inbox-num" id="pending_badge">0</span>
-</li>
-{% url 'todos.mine' as mines_url %}
-<li {% if request.path == mines_url %} class="active"{% endif %}>
-    <a href="{{ mines_url }}">
-        <i class="fas fa-folder"></i>{% trans 'nav_private_todos' %}</a>
-</li>
-{% url 'todos.all-mine' as all_mines_url %}
-<li {% if request.path == all_mines_url %} class="active"{% endif %}>
-    <a href="{{ all_mines_url }}">
-        <i class="fas fa-folder-open"></i>{% trans 'nav_all_todos' %}</a>
-</li>
-{% url 'todos.shared_in' as shared_ins_url %}
-<li {% if request.path == shared_ins_url %} class="active"{% endif %}>
-    <a href="{{ shared_ins_url }}">
-        <i class="fas fa-mail-forward"></i>{% trans 'nav_shared_in_todos' %}</a>
-    <span class="inbox-num" id="shared_in_badge">0</span>
-</li>
-{% url 'todos.shared_out' as shared_out_url %}
-<li {% if request.path == shared_out_url %} class="active"{% endif %}>
-    <a href="{{ shared_out_url }}">
-        <i class="fas fa-reply"></i>{% trans 'nav_shared_out_todos' %}</a>
-        <span class="inbox-num" id="shared_out_badge">0</span>
-</li>
-{% url 'todos.archived' as archived_url %}
-<li {% if request.path == archived_url %} class="active"{% endif %}>
-    <a href="{{ archived_url }}">
-        <i class="fas fa-archive"></i>{% trans 'nav_archived_todos' %}</a>
-</li>
-{% url 'todos.trashed' as trashed_url %}
-<li {% if request.path == trashed_url %} class="active"{% endif %}>
-    <a href="{{ trashed_url }}">
-        <i class="fas fa-trash"></i>{% trans 'nav_trashed_todos' %}</a>
+
+{% url 'workspaces.list' as wspaace_list_url %}
+<li {% if request.path == wspaace_list_url %} class="active"{% endif %}>
+    <a href="{{ wspaace_list_url }}?next={{request.path}}">
+    <i class="fa fa-briefcase"></i>{% trans 'nav_all_workspaces' %}
+    </a>
 </li>
 {% else %}
 <li>
     There is no active workspace. <br>
     please select a workspace in the bottom or create new workspace
 </li>
-{% endif %}
-
 <li>
     <a href="{% url 'workspaces.create' %}?next={{request.path}}">{% trans 'link_new_workspace' %}</a>
 </li>
+{% endif %}
+
 
 {% if MY_WORKSPACES %}
 <li>
@@ -141,13 +166,6 @@
     </a>
 </li>
 {% endif %}
-
-{% url 'workspaces.list' as wspaace_list_url %}
-<li {% if request.path == wspaace_list_url %} class="active"{% endif %}>
-    <a href="{{ wspaace_list_url }}?next={{request.path}}">
-    <i class="fa fa-briefcase"></i>{% trans 'nav_all_workspaces' %}
-    </a>
-</li>
 
 {% url 'language.change' as lang_url %}
 <li {% if request.path == lang_url %} class="active"{% endif %}>

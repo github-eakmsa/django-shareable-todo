@@ -1,4 +1,4 @@
-<${actorFirstName}> has shared the Workspace [${workspaceName}] with you on ${workspaceCreationDate}
+<${actorFirstName}> has shared the Workspace [${workspaceName}] with you on ${workspaceShareDate}
 
 Click the link below to see details
 

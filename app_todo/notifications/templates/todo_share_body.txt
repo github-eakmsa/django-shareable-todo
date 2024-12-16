@@ -1,4 +1,4 @@
-<${actorFirstName}> has shared the Todo [${todoTitle}] with you on ${todoCreationDate}
+<${actorFirstName}> has shared the Todo [${todoTitle}] with you on ${todoShareDate}
 
 Click the link below to see details
 

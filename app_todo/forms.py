@@ -1,15 +1,26 @@
 from django import forms
-from .models import Todo, Comment, Workspace
+from .models import Feedback, Todo, Comment, Workspace
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordChangeForm
+
+# creating a form
+class FeedbackForm(forms.ModelForm):
+
+	# create meta class
+	class Meta:
+		# specify model to be used
+		model = Feedback
+
+		# specify fields to be used
+		fields = [
+			"name",
+			"email",
+			"message",
+		]
 
 class CustomPasswordChangeForm(PasswordChangeForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Example: Add custom styling or placeholder text
-        # self.fields['old_password'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Old Password'})
-        # self.fields['new_password1'].widget.attrs.update({'class': 'form-control', 'placeholder': 'New Password'})
-        # self.fields['new_password2'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Confirm New Password'})
 
 # creating a form
 class UserForm(forms.ModelForm):
