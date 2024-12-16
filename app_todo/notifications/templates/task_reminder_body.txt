@@ -1,0 +1,5 @@
+The due date for your Todo [${todoTitle}] is on ${todoExpiryDate}
+
+Click the link below to see details
+
+${todoDetailLink}

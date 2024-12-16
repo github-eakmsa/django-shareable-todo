@@ -4,12 +4,14 @@ from . import views
 from app_todo.views import CustomPasswordChangeView, CustomPasswordChangeDoneView, NotificationViewSet, SaveFCMTokenView
 from rest_framework.routers import DefaultRouter
 from django.views.generic import TemplateView
+from django.contrib.auth import views as auth_views
 
 router = DefaultRouter()
 router.register(r'notifications', NotificationViewSet)
 
 urlpatterns = [
     path('', views.index, name='index'),    # Home page
+    path('features/', views.features, name='features'),    # Features page
     path('about/', views.about, name='about'),    # About page
     path('contact/', views.contact, name='contact'),    # Contact page
     path('register/', views.register_page, name='register'),  # Registration page
@@ -22,8 +24,14 @@ urlpatterns = [
     # Language switcher
     path('i18n/', include('django.conf.urls.i18n')),
     path('logout/', views.logout_view, name='logout'),    # Logout 
+    # password change 
     path('password-change/', CustomPasswordChangeView.as_view(), name='password_change'),
     path('password-change/done/', CustomPasswordChangeDoneView.as_view(), name='password_change_done'),
+    # password reset
+    path('password-reset/', auth_views.PasswordResetView.as_view(template_name='registration/password_reset_form.html'), name='password_reset'),
+    path('password-reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='registration/password_reset_done.html'), name='password_reset_done'),
+    path('password-reset-confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='registration/password_reset_confirm.html'), name='password_reset_confirm'),
+    path('password-reset-complete/', auth_views.PasswordResetCompleteView.as_view(template_name='registration/password_reset_complete.html'), name='password_reset_complete'),
 
     path('todos/create/', views.todo_create, name='todos.create'),
     path('todos/recent/', views.todos_recent, name='todos.recent'),    
@@ -55,8 +63,8 @@ urlpatterns = [
     path('search/', views.grand_search, name='grand_search'),
 
     path('notifications/unread', views.notifications_unread, name='notifications.unread'),
-    path('test-email/', views.testMail, name='test-email'),
     path('', include(router.urls)),
+    path('api/get-firebase-config/', views.getFirebaseConfig, name='get_firebase_config'),
     path('api/save-fcm-token/', SaveFCMTokenView.as_view(), name='save_fcm_token'),
     # Other URLs
     path('firebase-messaging-sw.js', TemplateView.as_view(template_name="firebase-messaging-sw.js", content_type='application/javascript')),

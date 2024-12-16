@@ -1,0 +1,10 @@
+------------------------
+todo - app : Django 
+------------------------
+
+multi lingual 
+https://mlocati.github.io/articles/gettext-iconv-windows.html
+
+-----------------
+--- Mohadbran ---
+-----------------

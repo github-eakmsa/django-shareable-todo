@@ -188,9 +188,13 @@
                                             {% endblock %}
                                         </ul>
                                     </div>
-                                    <a href="{% url 'todos.create' %}?next={{request.path}}" class="au-btn au-btn-icon au-btn--green text-light">
+                                    
+                                    {% if CURRENT_WORKSPACE %}
+                                    <a href="{% url 'todos.create' %}?next={{request.path}}" class="au-btn au-btn-icon au-btn--green text-white">
                                         <i class="zmdi zmdi-plus"></i>{% trans "btn_new_todo" %}
                                     </a>
+                                    {% endif %}
+
                                 </div>
                             </div>
                         </div>
@@ -228,7 +232,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="copyright">
-                                <p>{% trans "text_copy_right" %} © {% now 'Y' %} Cool Todo. {% trans "text_all_rights_reserved" %}</p>
+                                <p>{% trans "text_copy_right" %} © 2024 - {% now 'Y' %} Cool Todo. {% trans "text_all_rights_reserved" %}</p>
                             </div>
                         </div>
                     </div>
@@ -368,23 +372,21 @@
 <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-messaging-compat.js"></script>
 
 <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyAPE-nwaHWcCQJy3CmH9jWv8jCZFYXna9s",
-      authDomain: "todo-app-11873.firebaseapp.com",
-      projectId: "todo-app-11873",
-      storageBucket: "todo-app-11873.appspot.com",
-      messagingSenderId: "1029086662942",
-      appId: "1:1029086662942:web:df169f068e8bd520a6790f",
-      measurementId: "G-NKHQ8GP41Z"
-    };
-    
-    firebase.initializeApp(firebaseConfig);
-    
-    // Get messaging instance
-    const messaging = firebase.messaging();
+
+    fetch("{% url 'get_firebase_config' %}")
+    .then(response => response.json())
+    .then(config => {
+
+        firebase.initializeApp(config);
+
+        const messaging = firebase.messaging();
+
+        getFcmToken(messaging);
+
+    });
 
     // Function to get FCM token
-    function getFcmToken() {
+    function getFcmToken(messaging) {
             messaging.getToken({ vapidKey: 'BKQtJ6fOK8kFQ78d80TrZCd_zYOLcVbdl6A5fcXStKeFqktK9i4-mAUbH8eUOPdNUou51vwtYCBKRs2xehD-aHc' })
             .then((currentToken) => {
             if (currentToken) {
@@ -419,8 +421,6 @@
             });
         }
     }
-
-    getFcmToken();
 
   </script>
 

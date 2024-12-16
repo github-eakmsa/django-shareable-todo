@@ -1,4 +1,4 @@
-<${actorFirstName}> has given a comment to the Todo [${todoTitle}] on ${todoCreationDate}
+<${actorFirstName}> has given a comment to the Todo [${todoTitle}] on ${commentCreationDate}
 
 Click the link below to see details
 

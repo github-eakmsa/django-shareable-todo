@@ -92,14 +92,24 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'proj_django_todo.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "collab_todo",
+        "USER": "root",
+        "PASSWORD": "",
+        "HOST": "127.0.0.1",
+        "PORT": "3306",
     }
 }
 
@@ -214,6 +224,16 @@ LOGOUT_REDIRECT_URL = '/login/'
 
 FCM_SERVICE_ACCOUNT_FILE = os.path.join(BASE_DIR, 'app_todo', env('FCM_SERVICE_ACCOUNT_FILE'))
 
-# Replace 'path/to/your/google-services.json' with the actual path
+# Replace 'path/to/your/google-services.json' with the actual path 
 cred = credentials.Certificate(FCM_SERVICE_ACCOUNT_FILE)
 firebase_admin.initialize_app(cred)
+
+FIREBASE_CONFIG = {
+    'apiKey': env('FB_API_KEY', default=''),
+    'authDomain': env('FB_AUTH_DOMAIN', default=''),
+    'projectId': env('FB_PROJECT_ID', default=''),
+    'storageBucket': env('FB_STORAGE_BUCKET', default=''),
+    'messagingSenderId': env('FB_MESSAGING_SENDER_ID', default=''),
+    'appId': env('FB_APP_ID', default=''),
+    'measurementId': env('FB_MEASUREMENT_ID', default=''),
+}

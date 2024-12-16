@@ -43,6 +43,7 @@
     <div class="row form-group">
       <div class="col col-md-3">
         <label for="" class=" form-control-label">
+          {{workspace.id}}
         <a href="{% url 'workspaces.detail' workspace.id %}?next={{request.path}}" class="btn btn-link">{% trans "link_cancel" %}</a>
       </label>
       </div>

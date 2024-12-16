@@ -152,7 +152,7 @@ msgstr "- select"
 
 #: .\app_todo\templates\inc\nav.html:149
 msgid "nav_all_workspaces"
-msgstr "All Workspaces"
+msgstr "Workspaces"
 
 #: .\app_todo\templates\inc\nav.html:156
 msgid "nav_language"
