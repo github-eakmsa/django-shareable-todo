@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 {% extends 'inc/layout.html' %}
 
 {% load i18n %}
@@ -17,23 +16,10 @@
 {% else %}
 {% include "inc/breadcrumb.html" with path="Todos/Create" only %}
 {% endif %}
-=======
-
-
-{% extends 'layout.html' %}
-
-{% block title %}
-{% if form.instance.pk %}Edit{% else %}Create{% endif %} ToDo
-{% endblock %}
-
-{% block breadcrumb %}
-	{% include "../breadcrumb.html" with path="Todos/Create" only%}
->>>>>>> a534c5519ffb00809869d5ff3e31310c4f219296
 {% endblock %}
 
 {% block content %}
 <div class="row">
-<<<<<<< HEAD
 	<div class="col-md-10 col-sm-12">
         
         {% if form.errors %}
@@ -213,51 +199,3 @@
 </script> {% endcomment %}
 {% endblock %}
 	
-=======
-    <div class="col">
-		
-		{% if message %}
-			<p class="alert alert-success">
-				{{message}}
-			</p>
-		{% endif %}
-			
-	<div class="card">
-		<div class="card-header">
-			{% if form.instance.pk %}Edit{% else %}Create{% endif %} ToDo
-		</div>
-		<div class="card-body card-block">
-			<form action="" method="post" class="form-horizontal">
-				
-				{% csrf_token %}
-
-				<div class="row form-group">
-					<div class="col col-md-3">
-						<label for="hf-title" class=" form-control-label">Title</label>
-					</div>
-					<div class="col-12 col-md-9">
-						<input type="text" id="hf-title" name="title" value="{{ form.instance.title }}" placeholder="Enter title..." class="form-control">
-					</div>
-				</div>
-				<div class="row form-group">
-					<div class="col col-md-3">
-						<label for="hf-description" class=" form-control-label">Description</label>
-					</div>
-					<div class="col-12 col-md-9">
-						<input type="description" id="hf-description" name="body" value="{{ form.instance.body }}" placeholder="Enter description..." class="form-control">
-					</div>
-				</div>
-		<div class="row form-group">
-			<div class="col col-md-3"></div>
-			<div class="col-12 col-md-9">
-			<button type="submit" class="btn btn-primary btn-block">Save</button>
-			</div>
-		</div>
-			</form>
-		</div>
-	</div>
-
-</div>
-</div>
-{% endblock %}
->>>>>>> a534c5519ffb00809869d5ff3e31310c4f219296

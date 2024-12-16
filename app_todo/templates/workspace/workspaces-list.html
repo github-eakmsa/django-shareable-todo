@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block breadcrumb %}
-{% include "inc/breadcrumb.html" with path="Workspace/Details" only %}
+{% include "inc/breadcrumb.html" with path="Workspace/List" only %}
 {% endblock %}
 
 {% block content %}
@@ -25,6 +25,7 @@
         </small>
       </a>
       {% trans "title_workspaces" %}
+      <a href="{% url 'workspaces.create' %}?next={{request.path}}" class="float-right">{% trans 'link_new_workspace' %}</a>
     </div>
 
     <div class="card-body card-block">

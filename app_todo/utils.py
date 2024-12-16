@@ -2,10 +2,7 @@ from background_task import background
 from django.core.mail import EmailMessage
 from django.conf import settings
 import logging
-from django.utils.timezone import now, timedelta
 
-# from app_todo.views import NotificationViewSet
-from .models import Notification, Todo
 logger = logging.getLogger(__name__)
 
 @background(schedule=1)
@@ -45,26 +42,19 @@ def send_email(subject, message, recipient_list, from_email=None, html_message=N
         # Log the error
         logger.error(f"Error sending email: {e}")
         return False
+        
+        # # Send reminder email
+        # mail_subject = 'Todo Reminder'
+        # text_content = f'Your todo "{todo.title}" is due in less than 6 hours!'
 
-@background(schedule=60) # Set an initial delay or keep it to run immediately
-def send_due_date_reminder(todo_id):
-    todo = Todo.objects.get(id=todo_id)
-    current_time = now()
-    reminder_time = todo.expires_at - timedelta(hours=6)
-    
-    if current_time >= reminder_time and not todo.reminder_sent:
-        # Send reminder email
-        mail_subject = 'Todo Reminder'
-        text_content = f'Your todo "{todo.title}" is due in less than 6 hours!'
-
-        email_sent = send_email(mail_subject, text_content, [todo.user.email], html_message=text_content)
+        # email_sent = send_email(mail_subject, text_content, [todo.user.email], html_message=text_content)
             
-        if email_sent:
-            # If email sent successfully, proceed to next step
-            # Mark the reminder as sent
-            todo.reminder_sent = True
-            todo.save()
-            return True
-        else:
-            # Handle email failure case
-            return False
+        # if email_sent:
+        #     # If email sent successfully, proceed to next step
+        #     # Mark the reminder as sent
+        #     todo.reminder_sent = True
+        #     todo.save()
+        #     return True
+        # else:
+        #     # Handle email failure case
+        #     return False

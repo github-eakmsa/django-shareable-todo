@@ -1,0 +1,91 @@
+{% extends 'inc/guest-layout.html' %}
+
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+   Features
+{% endblock %}
+
+{% block page_top_style_and_script %}
+<style>
+  .features-hero {
+    background: #4caf50;
+    color: white;
+    padding: 100px 20px;
+    text-align: center;
+  }
+
+  .features-hero h1 {
+    font-size: 3rem;
+    font-weight: bold;
+  }
+
+  .feature-item {
+    padding: 30px 20px;
+    text-align: center;
+    background: #f9f9f9;
+    margin: 10px;
+    border-radius: 10px;
+  }
+
+  .feature-item h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+  }
+
+  .feature-item p {
+    font-size: 1rem;
+  }
+
+  .footer {
+    background: #333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .footer a {
+    color: #4caf50;
+    text-decoration: none;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+
+    <!-- Hero Section -->
+    <div class="features-hero">
+        <h1>Features</h1>
+        <p>
+          Discover how our app simplifies task management for you and your team.
+        </p>
+      </div>
+  
+      <!-- Features List -->
+      <div class="container my-5">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="feature-item">
+              <h3>Multiple Workspaces</h3>
+              <p>Organize tasks efficiently across multiple workspaces.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="feature-item">
+              <h3>Collaboration Tools</h3>
+              <p>Assign tasks, set deadlines, and track progress seamlessly.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="feature-item">
+              <h3>Task Reminders</h3>
+              <p>
+                Stay on track with personalized reminders for tasks and deadlines.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+{% endblock %}

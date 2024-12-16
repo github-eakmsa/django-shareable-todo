@@ -5,8 +5,19 @@ User = get_user_model()
 from django.conf import settings
 import uuid
 from django_softdelete.models import SoftDeleteModel
-from django.utils.timezone import timedelta
 
+class Feedback(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='feedbacks', blank=True, null=True)
+    name = models.CharField(max_length=50)
+    email = models.CharField(max_length=50)
+    message = models.CharField(max_length=250)
+    status = models.SmallIntegerField(default=settings.ACTIVE, choices=settings.RECORD_STATUS_CHOICES, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        unique_together = ('user', 'name')
+        return f"{self.message}"
 
 class UserProfile(models.Model):
     
@@ -79,6 +90,7 @@ class Todo(SoftDeleteModel):
     updated_at = models.DateTimeField(auto_now=True)
     needs_reminder = models.BooleanField(default=True)
     reminder_sent = models.BooleanField(default=False)
+    completed_at = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.title}"

@@ -7,37 +7,67 @@
    About Us
 {% endblock %}
 
+{% block page_top_style_and_script %}
+<style>
+  .about-hero {
+    background: linear-gradient(to right, #009688, #4caf50);
+    color: white;
+    padding: 100px 20px;
+    text-align: center;
+  }
+
+  .about-hero h1 {
+    font-size: 3rem;
+    font-weight: bold;
+  }
+
+  .about-section {
+    padding: 50px 20px;
+  }
+
+  .about-section .content-box {
+    background: #f9f9f9;
+    padding: 30px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+
+  .footer {
+    background: #333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .footer a {
+    color: #4caf50;
+    text-decoration: none;
+  }
+</style>
+{% endblock %}
 
 {% block content %}
-<div class="col-md-2 col-sm-12">
-</div>
-  <div class="col-md-8 col-sm-12">
-  <div class="card">
-      <img class="card-img-top img-thumbnail" src="{% static 'images/dash.png' %}" alt="Card image cap" >
-      <div class="card-body">
-          
-        <h4 class="card-title mb-3">About Us</h4>
 
-          <p class="card-text">
-          Our mission is to make task management easier and more collaborative.
-          </p>
-
-          <p class="card-text">
-          With a focus on flexibility and efficiency, we’ve created a tool that allows individuals and teams to manage multiple projects in one place. 
-          <br>
-          Workspaces empower you to group your tasks and collaborate more effectively with colleagues, while our intuitive design ensures you spend less time managing tasks and more time completing them.
-          </p>
-        
-        <h4 class="card-title mb-3">Why We Built This</h4>
-        
-        <p class="card-text">
-        We believe that effective collaboration shouldn’t be complicated. That’s why we’ve developed a solution that simplifies the process, letting you focus on what matters most—getting things done.
-        </p>
-
-      </div>
+  <!-- Hero Section -->
+  <div class="about-hero">
+    <h1>About Todo Manager</h1>
+    <p>Our story, vision, and mission to transform productivity for everyone.</p>
   </div>
-</div>
-<div class="col-md-2 col-sm-12">
-</div>
 
+  <!-- About Section -->
+  <div class="container about-section">
+    <div class="content-box">
+      <h3>Our Story</h3>
+      <p>Todo Manager was born from the need to simplify task management while fostering collaboration. We’ve combined powerful technology with an intuitive interface to deliver a solution that empowers teams and individuals alike.</p>
+    </div>
+    <div class="content-box">
+      <h3>Our Mission</h3>
+      <p>To provide a platform that bridges the gap between planning and execution, enabling users to organize their tasks effortlessly, collaborate seamlessly, and achieve their goals efficiently.</p>
+    </div>
+    <div class="content-box">
+      <h3>Our Vision</h3>
+      <p>We envision a world where productivity tools are accessible, intuitive, and impactful. Todo Manager aims to set the standard for how people work and collaborate in a fast-paced digital world.</p>
+    </div>
+  </div>
+  
 {% endblock %}

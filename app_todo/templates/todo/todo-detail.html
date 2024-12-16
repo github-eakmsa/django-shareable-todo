@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 {% extends 'inc/layout.html' %}
 
@@ -41,7 +40,7 @@ ul.timeline > li:before {
   z-index: 400;
 }
 </style>
-{% endblock %}  
+{% endblock %}
 
 {% block breadcrumb %}
 {% include "inc/breadcrumb.html" with path="Todo/Details" only %}
@@ -125,8 +124,7 @@ ul.timeline > li:before {
       {% endfor %}
 
       </ol>
-      {% endif %}        
-      <hr/>
+      {% endif %}
 
       <table class="table">
         <tbody>
@@ -137,9 +135,9 @@ ul.timeline > li:before {
                 {{todo.duration}}
             </td>
             <td>
-              <b>{% trans "label_record_status" %} </b> 
+              <b>{% trans "label_due_date" %} </b>
               <br/>
-              {{ todo.get_status_display }}
+              {{ todo.expires_at|expired_due_date|safe }}
             </td>
           </tr>
           <tr>
@@ -161,9 +159,9 @@ ul.timeline > li:before {
                 {{todo.needs_reminder}}
             </td>
             <td>
-              <b>{% trans "label_due_date" %} </b>
+              <b>{% trans "label_record_status" %} </b> 
               <br/>
-              {{ todo.expires_at|expired_due_date|safe }}
+              {{ todo.get_status_display }}
             </td>
           </tr>
         </tbody>
@@ -173,7 +171,7 @@ ul.timeline > li:before {
       <p>
         <a href="{{next}}?next={{request.path}}" class="btn btn-link">&larr; {% trans "link_back" %}</a>
         
-        {% if user == todo.user %}          
+        {% if user == todo.user %}
         |
         <a href="{% url 'todos.share' todo.id %}?next={{request.path}}" class="btn btn-link">{% trans "link_share" %}</a> |
         <a href="{% url 'todos.update' todo.id %}?next={{request.path}}" class="btn btn-link">{% trans "link_edit" %}</a>
@@ -257,26 +255,3 @@ ul.timeline > li:before {
 
 </div>
   {% endblock %}
-=======
-{% extends 'layout.html' %}
-
-{% block title %}
-   ToDo Details
-{% endblock %}
-
-{% block content %}
-  <h2>{{ todo.title }}</h2>
-  <p>{{ todo.body }}</p>
-  <p>
-    Shared with: 
-<ul>
-    {% for user in todo.shared_with.all %} 
-    <li>
-    {{ user.username }} 
-    </li>
-    {% endfor %}
-  </ul>
-  </p>
-  <a href="{% url 'todos.mine' %}">Back to list</a>
-{% endblock %}
->>>>>>> a534c5519ffb00809869d5ff3e31310c4f219296
